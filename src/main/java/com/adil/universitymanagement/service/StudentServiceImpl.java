@@ -75,6 +75,6 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<Course> getCoursesByStudent(Student student) {
-        return courseRepository.findByStudent(student);
+        return courseRepository.findByStudents(student);
     }
 }
