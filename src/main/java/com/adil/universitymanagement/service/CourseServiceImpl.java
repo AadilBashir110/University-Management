@@ -1,6 +1,7 @@
 package com.adil.universitymanagement.service;
 
 import com.adil.universitymanagement.model.Course;
+import com.adil.universitymanagement.model.Student;
 import com.adil.universitymanagement.model.Teacher;
 import com.adil.universitymanagement.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,17 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public void deleteCourse(Long id) {
-
+        courseRepository.deleteById(id);
+        System.out.println("Course deleted with id"+id);
     }
 
     @Override
     public Course assignTeacherToCourse(Long id, Teacher teacher) {
+        return null;
+    }
+
+    @Override
+    public Course enrollStudentToCourse(Long id, Student student) {
         return null;
     }
 }

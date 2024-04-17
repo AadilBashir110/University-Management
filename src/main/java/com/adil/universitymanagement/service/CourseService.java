@@ -1,9 +1,9 @@
 package com.adil.universitymanagement.service;
 
 import com.adil.universitymanagement.model.Course;
+import com.adil.universitymanagement.model.Student;
 import com.adil.universitymanagement.model.Teacher;
 
-import java.util.Optional;
 
 public interface CourseService {
 
@@ -12,4 +12,6 @@ public interface CourseService {
     Course updateCourse(Long id, Course courseDetails) throws Exception;
     void deleteCourse(Long id);
     Course assignTeacherToCourse(Long id, Teacher teacher);
+    Course enrollStudentToCourse(Long id, Student student);
+
 }
