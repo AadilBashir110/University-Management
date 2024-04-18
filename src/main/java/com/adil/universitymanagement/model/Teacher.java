@@ -2,7 +2,8 @@ package com.adil.universitymanagement.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -14,13 +15,13 @@ public class Teacher {
     private Long id;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private Set<Course> courses = new HashSet<>();
+    @OneToMany(mappedBy = "teacher")
+    private List<Course> courses = new ArrayList<>();
 
     public Teacher(){
     }
 
-    public Teacher(Long id, String name, String email, Set<Course> courses) {
+    public Teacher(Long id, String name, String email, List<Course> courses) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -51,11 +52,11 @@ public class Teacher {
         this.email = email;
     }
 
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 }

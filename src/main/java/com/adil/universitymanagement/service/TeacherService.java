@@ -9,8 +9,8 @@ public interface TeacherService {
     public Teacher addTeacher(Teacher teacher);
     public Teacher getTeacherById(Long id) throws Exception;
     public List<Teacher> getAllTeachers();
-    public Teacher updateTeacher(Long id, Teacher teacherDetails) throws Exception;
-    public void deleteTeacher(Long id);
-    public List<Course> getCoursesByTeacher(Teacher teacher);
+    public Teacher updateTeacher(Teacher teacher);
+   // public void deleteTeacher(Long id);
+
 
 }

@@ -9,8 +9,7 @@ public interface StudentService {
     public Student addStudent(Student student);
     public Student getStudentById(Long id) throws Exception;
     public List<Student> getAllStudents();
-    public Student updateStudent(Long id, Student studentDetails) throws Exception;
-    public void deleteStudent(Long id);
-    public List<Course> getCoursesByStudent(Student student);
+    public Student updateStudent(Student studentDetails);
+   // public void deleteStudent(Long id);
 
 }

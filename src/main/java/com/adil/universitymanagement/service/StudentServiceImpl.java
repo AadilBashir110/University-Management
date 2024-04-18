@@ -1,14 +1,11 @@
 package com.adil.universitymanagement.service;
 
 
-import com.adil.universitymanagement.model.Course;
 import com.adil.universitymanagement.model.Student;
-import com.adil.universitymanagement.repository.CourseRepository;
 import com.adil.universitymanagement.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +14,6 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService{
     @Autowired
     private StudentRepository studentRepository;
-    @Autowired
-    private CourseRepository courseRepository;
 
     @Override
     public Student addStudent(Student student) {
@@ -28,8 +23,7 @@ public class StudentServiceImpl implements StudentService{
         newStudent.setId(student.getId());
         newStudent.setCourses(student.getCourses());
 
-        Student savedStudent = studentRepository.save(newStudent);
-        return savedStudent;
+        return studentRepository.save(newStudent);
     }
 
     @Override
@@ -47,34 +41,26 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student updateStudent(Long id, Student studentDetails) throws Exception {
-        Optional<Student> student = studentRepository.findById(id);
-        if(student.isEmpty()){
-            throw new Exception("Student not exist with id"+id);
+    public Student updateStudent(Student student) {
+        Student oldStudent = studentRepository.findById(student.getId()).get();
+
+        if(student.getName()!=null){
+            oldStudent.setName(student.getName());
+        }
+        if(student.getEmail()!=null){
+            oldStudent.setEmail(student.getEmail());
+        }
+        if(student.getCourses()!=null){
+            oldStudent.setCourses(student.getCourses());
         }
 
-        Student oldStudent = student.get();
-        if(studentDetails.getName()!=null){
-            oldStudent.setName(studentDetails.getName());
-        }
-        if(studentDetails.getEmail()!=null){
-            oldStudent.setEmail(studentDetails.getEmail());
-        }
-        if(studentDetails.getCourses()!=null){
-            oldStudent.setCourses(studentDetails.getCourses());
-        }
-        Student updatedStudent = studentRepository.save(oldStudent);
-        return updatedStudent;
+        return studentRepository.save(oldStudent);
     }
 
-    @Override
+   /* @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
         System.out.println("Student deleted with id"+id);
-    }
+    }*/
 
-    @Override
-    public List<Course> getCoursesByStudent(Student student) {
-        return courseRepository.findByStudents(student);
-    }
 }

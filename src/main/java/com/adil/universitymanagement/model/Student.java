@@ -2,7 +2,8 @@ package com.adil.universitymanagement.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,9 +23,9 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private Set<Course> courses = new HashSet<>();
+    private List<Course> courses = new ArrayList<>();
 
-    public Student(Long id, String name, String email, Set<Course> courses) {
+    public Student(Long id, String name, String email, List<Course> courses) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -55,11 +56,11 @@ public class Student {
         this.email = email;
     }
 
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 }

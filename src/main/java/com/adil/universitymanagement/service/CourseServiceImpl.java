@@ -7,12 +7,19 @@ import com.adil.universitymanagement.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService{
     @Autowired
     private CourseRepository courseRepository;
+
+    @Override
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+
     @Override
     public Course addCourse(Course course) {
         Course newCourse = new Course();
@@ -45,8 +52,14 @@ public class CourseServiceImpl implements CourseService{
         if(courseDetails.getName()!=null){
             oldCourse.setName(courseDetails.getName());
         }
-
-        return null;
+        if(courseDetails.getStudents()!=null){
+            oldCourse.setStudents(courseDetails.getStudents());
+        }
+        if(courseDetails.getTeacher()!=null){
+            oldCourse.setTeacher(courseDetails.getTeacher());
+        }
+        Course updatedCourse = courseRepository.save(oldCourse);
+        return updatedCourse;
     }
 
     @Override
@@ -57,11 +70,30 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public Course assignTeacherToCourse(Long id, Teacher teacher) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if(course!=null){
+            course.setTeacher(teacher);
+            return courseRepository.save(course);
+        }
         return null;
     }
 
     @Override
     public Course enrollStudentToCourse(Long id, Student student) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course != null) {
+            course.getStudents().add(student);
+            return courseRepository.save(course);
+        }
         return null;
+    }
+    @Override
+    public List<Course> getCoursesByTeacher(Teacher teacher) {
+        return courseRepository.findByTeacher(teacher);
+    }
+
+    @Override
+    public List<Course> getCoursesByStudent(Student student) {
+        return courseRepository.findByStudents(student);
     }
 }
