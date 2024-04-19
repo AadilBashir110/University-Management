@@ -1,7 +1,7 @@
 package com.adil.universitymanagement.bean;
 
-import com.adil.universitymanagement.model.Student;
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Student;
+import com.adil.universitymanagement.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

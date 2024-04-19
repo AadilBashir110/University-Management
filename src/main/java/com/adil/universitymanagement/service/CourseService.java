@@ -1,8 +1,8 @@
 package com.adil.universitymanagement.service;
 
-import com.adil.universitymanagement.model.Course;
-import com.adil.universitymanagement.model.Student;
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Student;
+import com.adil.universitymanagement.entity.Teacher;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface CourseService {
 
     public List<Course> getAllCourses();
     Course addCourse(Course course);
-    Course getCourseById(Long id) throws Exception;
+    Course getCourseById(Long id);
     Course updateCourse(Course course);
 
     Course assignTeacherToCourse(Long id, Teacher teacher);

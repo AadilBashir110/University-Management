@@ -1,17 +1,17 @@
 package com.adil.universitymanagement.service;
 
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
-    @Autowired
-    private TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
     @Override
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();

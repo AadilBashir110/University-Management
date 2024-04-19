@@ -1,6 +1,6 @@
 package com.adil.universitymanagement.controller;
 
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

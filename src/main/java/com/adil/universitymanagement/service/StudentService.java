@@ -1,7 +1,6 @@
 package com.adil.universitymanagement.service;
 
-import com.adil.universitymanagement.model.Course;
-import com.adil.universitymanagement.model.Student;
+import com.adil.universitymanagement.entity.Student;
 
 import java.util.List;
 public interface StudentService {

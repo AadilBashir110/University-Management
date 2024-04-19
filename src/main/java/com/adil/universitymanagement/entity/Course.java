@@ -1,7 +1,8 @@
-package com.adil.universitymanagement.model;
+package com.adil.universitymanagement.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

@@ -1,31 +1,28 @@
-package com.adil.universitymanagement.model;
+package com.adil.universitymanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
-public class Student {
-    public Student() {
-    }
+public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String email;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+
+    @OneToMany(mappedBy = "teacher")
     private List<Course> courses = new ArrayList<>();
 
-    public Student(Long id, String name, String email, List<Course> courses) {
+    public Teacher(){
+    }
+
+    public Teacher(Long id, String name, String email, List<Course> courses) {
         this.id = id;
         this.name = name;
         this.email = email;

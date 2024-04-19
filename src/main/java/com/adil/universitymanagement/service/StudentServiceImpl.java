@@ -1,19 +1,22 @@
 package com.adil.universitymanagement.service;
 
 
-import com.adil.universitymanagement.model.Student;
+import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService{
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final CourseService courseService;
 
     @Override
     public Student addStudent(Student student) {
@@ -21,7 +24,18 @@ public class StudentServiceImpl implements StudentService{
         newStudent.setName(student.getName());
         newStudent.setEmail(student.getEmail());
         newStudent.setId(student.getId());
-        newStudent.setCourses(student.getCourses());
+
+        List<Course> newCourses = new ArrayList<>();
+
+        List<Course> studentCourses = student.getCourses();
+        for (Course course : studentCourses) {
+            Course retrievedCourse = courseService.getCourseById(course.getId());
+            if (retrievedCourse != null) {
+                newCourses.add(retrievedCourse);
+            }
+        }
+
+        newStudent.setCourses(newCourses);
 
         return studentRepository.save(newStudent);
     }

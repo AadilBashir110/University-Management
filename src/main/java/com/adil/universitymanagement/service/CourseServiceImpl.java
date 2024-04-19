@@ -1,19 +1,18 @@
 package com.adil.universitymanagement.service;
 
-import com.adil.universitymanagement.model.Course;
-import com.adil.universitymanagement.model.Student;
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Student;
+import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService{
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public List<Course> getAllCourses() {
@@ -33,13 +32,12 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course getCourseById(Long id) throws Exception {
-
-        Optional<Course> course = courseRepository.findById(id);
-        if(course.isPresent()) {
-            return course.get();
+    public Course getCourseById(Long id) {
+        Course course = courseRepository.findById(id).get();
+        if(course == null){
+            throw new RuntimeException("could not find course");
         }
-        throw new Exception("Course not exist with id"+id);
+        return course;
     }
 
     @Override

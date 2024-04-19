@@ -1,12 +1,11 @@
 package com.adil.universitymanagement.controller;
 
-import com.adil.universitymanagement.model.Student;
+import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.adil.universitymanagement.bean;
 
-import com.adil.universitymanagement.model.Course;
+import com.adil.universitymanagement.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

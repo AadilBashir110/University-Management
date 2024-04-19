@@ -1,8 +1,7 @@
 package com.adil.universitymanagement.controller;
 
-import com.adil.universitymanagement.model.Course;
-import com.adil.universitymanagement.model.Student;
-import com.adil.universitymanagement.model.Teacher;
+import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,11 +49,5 @@ public class CourseController {
     public ResponseEntity<Course> assignTeacherToCourse(@PathVariable Long id, @RequestBody Teacher teacher){
         Course assignedCourse = courseService.assignTeacherToCourse(id,teacher);
         return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
-    }
-
-    @PutMapping("/enroll-student/{id}")
-    public ResponseEntity<Course> enrollStudentToCourse(@PathVariable Long id, @RequestBody Student student){
-        Course enrolledCourse = courseService.enrollStudentToCourse(id,student);
-        return new ResponseEntity<>(enrolledCourse,HttpStatus.OK);
     }
 }
