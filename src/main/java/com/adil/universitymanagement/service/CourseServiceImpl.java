@@ -43,29 +43,20 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course updateCourse(Long id, Course courseDetails) throws Exception {
-        Optional<Course> course = courseRepository.findById(id);
-        if(course.isEmpty()){
-            throw new Exception("Course not exist with id"+id);
-        }
-        Course oldCourse = course.get();
-        if(courseDetails.getName()!=null){
-            oldCourse.setName(courseDetails.getName());
-        }
-        if(courseDetails.getStudents()!=null){
-            oldCourse.setStudents(courseDetails.getStudents());
-        }
-        if(courseDetails.getTeacher()!=null){
-            oldCourse.setTeacher(courseDetails.getTeacher());
-        }
-        Course updatedCourse = courseRepository.save(oldCourse);
-        return updatedCourse;
-    }
+    public Course updateCourse(Course course) {
+        Course oldCourse = courseRepository.findById(course.getId()).get();
 
-    @Override
-    public void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
-        System.out.println("Course deleted with id"+id);
+        if(course.getName()!=null){
+            oldCourse.setName(course.getName());
+        }
+        if(course.getStudents()!=null){
+            oldCourse.setStudents(course.getStudents());
+        }
+        if(course.getTeacher()!=null){
+            oldCourse.setTeacher(course.getTeacher());
+        }
+        return courseRepository.save(oldCourse);
+
     }
 
     @Override
@@ -96,4 +87,12 @@ public class CourseServiceImpl implements CourseService{
     public List<Course> getCoursesByStudent(Student student) {
         return courseRepository.findByStudents(student);
     }
+
+
+     /* @Override
+    public void deleteCourse(Long id) {
+        courseRepository.deleteById(id);
+        System.out.println("Course deleted with id"+id);
+    }*/
+
 }

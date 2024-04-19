@@ -4,9 +4,8 @@ package com.adil.universitymanagement.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Course{
@@ -19,13 +18,13 @@ public class Course{
     private Teacher teacher;
 
     // Define many-to-many relationship with Student
-    @ManyToMany(mappedBy = "courses")
-    private Set<Student> students = new HashSet<>();
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    private List<Student> students = new ArrayList<>();
 
     public Course(){
     }
 
-    public Course(Long id, String name, Teacher teacher, Set<Student> students) {
+    public Course(Long id, String name, Teacher teacher, List<Student> students) {
         this.id = id;
         this.name = name;
         this.teacher = teacher;
@@ -56,11 +55,11 @@ public class Course{
         this.teacher = teacher;
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 }

@@ -1,5 +1,6 @@
 package com.adil.universitymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Teacher {
     private Long id;
     private String name;
     private String email;
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses = new ArrayList<>();
 
