@@ -1,7 +1,7 @@
 package com.adil.universitymanagement.controller;
 
 import com.adil.universitymanagement.entity.Course;
-import com.adil.universitymanagement.entity.Teacher;
+import com.adil.universitymanagement.entity.CourseIdsRequest;
 import com.adil.universitymanagement.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +45,26 @@ public class CourseController {
         return new ResponseEntity<>(course,HttpStatus.OK);
     }
 
-    @PutMapping("/assign-teacher/{id}")
-    public ResponseEntity<Course> assignTeacherToCourse(@PathVariable Long id, @RequestBody Teacher teacher){
-        Course assignedCourse = courseService.assignTeacherToCourse(id,teacher);
+    @PostMapping("/assign-teacher")
+    public ResponseEntity<Course> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
+        Course assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
         return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
+    }
+
+    @PostMapping("/enroll-student")
+    public ResponseEntity<Course> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
+        Course enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
+        return new ResponseEntity<>(enrolledStudent,HttpStatus.OK);
+    }
+
+    @GetMapping("/by-teacher/{teacherId}")
+    public ResponseEntity<List<Course>> getCoursesByTeacher(@PathVariable Long teacherId ){
+        List<Course> courses = courseService.findCourseByTeacher(teacherId);
+        return new ResponseEntity<>(courses,HttpStatus.OK);
+    }
+    @GetMapping("/by-student/{studentId}")
+    public ResponseEntity<List<Course>> getCoursesByStudents(@PathVariable Long studentId){
+        List<Course> courses = courseService.findCoursesByStudent(studentId);
+        return new ResponseEntity<>(courses,HttpStatus.OK);
     }
 }

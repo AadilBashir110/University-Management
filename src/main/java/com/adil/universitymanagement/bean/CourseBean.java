@@ -1,14 +1,13 @@
 package com.adil.universitymanagement.bean;
 
 import com.adil.universitymanagement.entity.Student;
-import com.adil.universitymanagement.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +16,6 @@ import java.util.Set;
 public class CourseBean {
     private Long id;
     private String name;
-    private Teacher teacher;
-    private Set<Student> students = new HashSet<>();
+    private TeacherBean teacherBean;
+    private List<StudentBean> studentBeans = new ArrayList<>();
 }

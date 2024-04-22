@@ -1,6 +1,8 @@
 package com.adil.universitymanagement.service;
 
 
+import com.adil.universitymanagement.bean.CourseBean;
+import com.adil.universitymanagement.bean.StudentBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.repository.StudentRepository;
@@ -9,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService{
     private final CourseService courseService;
 
     @Override
-    public Student addStudent(Student student) {
+    public void addStudent(Student student) {
         Student newStudent = new Student();
         newStudent.setName(student.getName());
         newStudent.setEmail(student.getEmail());
@@ -37,16 +37,16 @@ public class StudentServiceImpl implements StudentService{
 
         newStudent.setCourses(newCourses);
 
-        return studentRepository.save(newStudent);
+        studentRepository.save(newStudent);
     }
 
     @Override
-    public Student getStudentById(Long id) throws Exception {
-        Optional<Student> student = studentRepository.findById(id);
-        if(student.isPresent()){
-            return student.get();
+    public Student getStudentById(Long id){
+        Student student = studentRepository.findById(id).get();
+        if(student==null){
+            throw new RuntimeException("could not find student");
         }
-        throw new Exception("Student now exist with student id"+id);
+        return student;
     }
 
     @Override

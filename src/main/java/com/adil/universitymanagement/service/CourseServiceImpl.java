@@ -4,6 +4,8 @@ import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.CourseRepository;
+import com.adil.universitymanagement.repository.StudentRepository;
+import com.adil.universitymanagement.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService{
     private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public List<Course> getAllCourses() {
@@ -27,8 +31,7 @@ public class CourseServiceImpl implements CourseService{
         newCourse.setStudents(course.getStudents());
         newCourse.setTeacher(course.getTeacher());
 
-        Course savedCourse = courseRepository.save(newCourse);
-        return savedCourse;
+        return courseRepository.save(newCourse);
     }
 
     @Override
@@ -58,31 +61,42 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course assignTeacherToCourse(Long id, Teacher teacher) {
-        Course course = courseRepository.findById(id).orElse(null);
-        if(course!=null){
-            course.setTeacher(teacher);
-            return courseRepository.save(course);
+    public Course assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+
+        for (Long courseId : courseIds) {
+            Course course = getCourseById(courseId);
+            if (course != null) {
+                course.setTeacher(teacher);
+                courseRepository.save(course);
+            }
         }
         return null;
     }
 
-    @Override
-    public Course enrollStudentToCourse(Long id, Student student) {
-        Course course = courseRepository.findById(id).orElse(null);
-        if (course != null) {
-            course.getStudents().add(student);
-            return courseRepository.save(course);
+    public Course enrollStudentToCourse(List<Long> courseIds, Long studentId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+
+        for (Long courseId : courseIds) {
+            Course course = getCourseById(courseId);
+            if (course != null) {
+                student.getCourses().add(course);
+            }
         }
+        studentRepository.save(student);
         return null;
     }
+
+
     @Override
-    public List<Course> getCoursesByTeacher(Teacher teacher) {
-        return courseRepository.findByTeacher(teacher);
+    public List<Course> findCourseByTeacher(Long teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+        return courseRepository .findByTeacher(teacher);
     }
 
     @Override
-    public List<Course> getCoursesByStudent(Student student) {
+   public List<Course> findCoursesByStudent(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
         return courseRepository.findByStudents(student);
     }
 

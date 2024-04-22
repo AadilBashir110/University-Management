@@ -28,13 +28,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher getTeacherById(Long id) throws Exception {
-
-        Optional<Teacher> teacher = teacherRepository.findById(id);
-        if(teacher.isPresent()){
-           return teacher.get();
+    public Teacher getTeacherById(Long id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        if(teacher==null){
+            throw new RuntimeException("could not find teacher");
         }
-        throw new Exception("Teacher not exist with id"+id);
+        return teacher;
     }
     @Override
     public Teacher updateTeacher(Teacher teacher) {
