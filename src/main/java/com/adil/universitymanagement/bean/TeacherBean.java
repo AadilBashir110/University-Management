@@ -2,6 +2,7 @@ package com.adil.universitymanagement.bean;
 
 
 import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Teacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,12 @@ public class TeacherBean {
         this.name = name;
         this.email = email;
         this.courseBean = courseBean;
+    }
+
+    public TeacherBean(Teacher teacher) {
+        this.id = teacher.getId();
+        this.name = teacher.getName();
+        this.email = teacher.getEmail();
     }
 
     public Long getId() {

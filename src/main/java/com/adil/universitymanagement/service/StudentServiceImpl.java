@@ -9,6 +9,7 @@ import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     private final CourseService courseService;
 
+    @Transactional
     @Override
    public void addStudent(StudentBean studentBean) {
         Student student = new Student();
@@ -27,11 +29,11 @@ public class StudentServiceImpl implements StudentService{
         student.setEmail(studentBean.getEmail());
         student.setId(studentBean.getId());
 
-        List<CourseBean> newCourses = new ArrayList<>();
+        List<Course> newCourses = new ArrayList<>();
 
         List<CourseBean> studentCourses = studentBean.getCourseBean();
         for (CourseBean course : studentCourses) {
-            CourseBean retrievedCourse = courseService.getCourseById(course.getId());
+            Course retrievedCourse = courseService.getCourseById(course.getId());
             if (retrievedCourse != null) {
                 newCourses.add(retrievedCourse);
             }

@@ -11,7 +11,7 @@ public interface CourseService {
 
     public List<Course> getAllCourses();
     Course addCourse(Course course);
-    CourseBean getCourseById(Long id);
+    Course getCourseById(Long id);
     Course updateCourse(Course course);
 
  //  Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);

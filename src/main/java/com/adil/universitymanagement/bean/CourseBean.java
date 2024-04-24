@@ -1,6 +1,8 @@
 package com.adil.universitymanagement.bean;
 
 
+import com.adil.universitymanagement.entity.Course;
+
 public class CourseBean {
     private Long id;
     private String name;
@@ -18,6 +20,12 @@ public class CourseBean {
         this.id = id;
         this.name = name;
         this.teacherBean = teacherBean;
+    }
+
+    public CourseBean(Course course) {
+        this.id = course.getId();
+        this.name = course.getName();
+        this.teacherBean =  new TeacherBean(course.getTeacher());
     }
 
     public Long getId() {

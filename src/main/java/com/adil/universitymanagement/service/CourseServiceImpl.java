@@ -37,19 +37,11 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseBean getCourseById(Long id) {
+    public Course getCourseById(Long id) {
         if(id == null){
             throw new RuntimeException("could not find course with id "+id);
         }
-        Course course = courseRepository.findById(id).orElse(null);
-
-        CourseBean courseBean = new CourseBean();
-        courseBean.setId(course.getId());
-        courseBean.setName(course.getName());
-        courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
-                course.getTeacher().getName(),
-                course.getTeacher().getEmail()));
-        return courseBean;
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override

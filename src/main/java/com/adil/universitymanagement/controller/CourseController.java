@@ -26,8 +26,9 @@ public class CourseController {
    @GetMapping("/{id}")
     public ResponseEntity<CourseBean> getCourseById(@PathVariable Long id){
         try{
-            CourseBean course = courseService.getCourseById(id);
-            return new ResponseEntity<>(course,HttpStatus.OK);
+            Course course = courseService.getCourseById(id);
+            CourseBean courseBean = new CourseBean(course);
+            return new ResponseEntity<>(courseBean,HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();
