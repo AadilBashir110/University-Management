@@ -1,6 +1,7 @@
 package com.adil.universitymanagement.bean;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,15 @@ public class StudentBean {
     private String name;
     private String email;
 
-    private List<CourseBean> courses = new ArrayList<>();
+    private List<CourseBean> courseBean = new ArrayList<>();
     public StudentBean() {
     }
 
-    public StudentBean(Long id, String name, String email, List<CourseBean> courses) {
+    public StudentBean(Long id, String name, String email, List<CourseBean> courseBean) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.courses = courses;
+        this.courseBean = courseBean;
     }
 
     public Long getId() {
@@ -46,11 +47,11 @@ public class StudentBean {
         this.email = email;
     }
 
-    public List<CourseBean> getCourses() {
-        return courses;
+    public List<CourseBean> getCourseBean() {
+        return courseBean;
     }
 
-    public void setCourses(List<CourseBean> courses) {
-        this.courses = courses;
+    public void setCourseBean(List<CourseBean> courseBean) {
+        this.courseBean = courseBean;
     }
 }

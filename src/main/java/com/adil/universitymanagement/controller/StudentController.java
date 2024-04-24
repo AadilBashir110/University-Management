@@ -3,29 +3,29 @@ package com.adil.universitymanagement.controller;
 import com.adil.universitymanagement.bean.StudentBean;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/students")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<List<Student>> getALlStudents(){
-        List<Student> studentList = studentService.getAllStudents();
+    public ResponseEntity<List<StudentBean>> getALlStudents(){
+        List<StudentBean> studentList = studentService.getAllStudents();
         return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id){
+    public ResponseEntity<StudentBean> getStudentById(@PathVariable Long id){
       try {
-          Student student = studentService.getStudentById(id);
+          StudentBean student = studentService.getStudentById(id);
           return new ResponseEntity<>(student,HttpStatus.OK);
       } catch (Exception e){
           e.printStackTrace();
@@ -33,9 +33,9 @@ public class StudentController {
       return null;
     }
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student student){
-        studentService.addStudent(student);
-        return new ResponseEntity<>(student,HttpStatus.OK);
+    public ResponseEntity<StudentBean> addStudent(@RequestBody StudentBean studentBean){
+        studentService.addStudent(studentBean);
+        return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
 
     @PutMapping("/update-student")

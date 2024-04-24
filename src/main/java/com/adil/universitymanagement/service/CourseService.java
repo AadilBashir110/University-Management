@@ -11,12 +11,12 @@ public interface CourseService {
 
     public List<Course> getAllCourses();
     Course addCourse(Course course);
-    Course getCourseById(Long id);
+    CourseBean getCourseById(Long id);
     Course updateCourse(Course course);
 
-    Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);
+ //  Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 
-    Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
+  // Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
     public List<Course> findCourseByTeacher(Long teacherId);
     public List<Course> findCoursesByStudent(Long studentId);

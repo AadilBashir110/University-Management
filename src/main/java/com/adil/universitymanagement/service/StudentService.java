@@ -6,11 +6,11 @@ import com.adil.universitymanagement.entity.Student;
 import java.util.List;
 public interface StudentService {
 
-    public void addStudent(Student student);
-    public Student getStudentById(Long id) ;
-    public List<Student> getAllStudents();
-    public Student updateStudent(Student student);
+    void addStudent(StudentBean studentBean);
+    StudentBean getStudentById(Long id) ;
+     List<StudentBean> getAllStudents();
+     Student updateStudent(Student student);
 
-   // public void deleteStudent(Long id);
+   // void deleteStudent(Long id);
 
 }

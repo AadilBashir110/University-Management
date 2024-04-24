@@ -1,5 +1,7 @@
 package com.adil.universitymanagement.service;
 
+import com.adil.universitymanagement.bean.CourseBean;
+import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.Teacher;
@@ -35,12 +37,19 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course getCourseById(Long id) {
-        Course course = courseRepository.findById(id).get();
-        if(course == null){
-            throw new RuntimeException("could not find course");
+    public CourseBean getCourseById(Long id) {
+        if(id == null){
+            throw new RuntimeException("could not find course with id "+id);
         }
-        return course;
+        Course course = courseRepository.findById(id).orElse(null);
+
+        CourseBean courseBean = new CourseBean();
+        courseBean.setId(course.getId());
+        courseBean.setName(course.getName());
+        courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
+                course.getTeacher().getName(),
+                course.getTeacher().getEmail()));
+        return courseBean;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class CourseServiceImpl implements CourseService{
 
     }
 
-    @Override
+   /* @Override
     public Course assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
 
@@ -73,8 +82,8 @@ public class CourseServiceImpl implements CourseService{
         }
         return null;
     }
-
-    public Course enrollStudentToCourse(List<Long> courseIds, Long studentId) {
+*/
+    /*public Course enrollStudentToCourse(List<Long> courseIds, Long studentId) {
         Student student = studentRepository.findById(studentId).orElse(null);
 
         for (Long courseId : courseIds) {
@@ -85,8 +94,7 @@ public class CourseServiceImpl implements CourseService{
         }
         studentRepository.save(student);
         return null;
-    }
-
+    }*/
 
     @Override
     public List<Course> findCourseByTeacher(Long teacherId) {

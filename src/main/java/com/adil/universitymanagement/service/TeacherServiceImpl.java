@@ -1,12 +1,14 @@
 package com.adil.universitymanagement.service;
 
+import com.adil.universitymanagement.bean.CourseBean;
+import com.adil.universitymanagement.bean.TeacherBean;
+import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,12 +30,29 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher getTeacherById(Long id) {
-        Teacher teacher = teacherRepository.findById(id).get();
-        if(teacher==null){
+    public TeacherBean getTeacherById(Long id) {
+        if(id==null){
             throw new RuntimeException("could not find teacher");
         }
-        return teacher;
+        Teacher teacher = teacherRepository.findById(id).orElse(null);
+        TeacherBean teacherBean = new TeacherBean();
+
+        teacherBean.setId(teacher.getId());
+        teacherBean.setName(teacher.getName());
+        teacherBean.setEmail(teacher.getEmail());
+
+        List<Course> teacherCourses = teacher.getCourses();
+        for(Course course: teacherCourses){
+            if(course != null) {
+                CourseBean courseBean = new CourseBean();
+                courseBean.setId(course.getId());
+                courseBean.setName(course.getName());
+
+                teacherBean.getCourseBean().add(courseBean);
+            }
+        }
+
+        return teacherBean;
     }
     @Override
     public Teacher updateTeacher(Teacher teacher) {

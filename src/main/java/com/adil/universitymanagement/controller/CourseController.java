@@ -1,5 +1,6 @@
 package com.adil.universitymanagement.controller;
 
+import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.CourseIdsRequest;
 import com.adil.universitymanagement.service.CourseService;
@@ -22,10 +23,10 @@ public class CourseController {
         return new ResponseEntity<>(courseList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long id){
+   @GetMapping("/{id}")
+    public ResponseEntity<CourseBean> getCourseById(@PathVariable Long id){
         try{
-            Course course = courseService.getCourseById(id);
+            CourseBean course = courseService.getCourseById(id);
             return new ResponseEntity<>(course,HttpStatus.OK);
 
         } catch (Exception e) {
@@ -45,7 +46,7 @@ public class CourseController {
         return new ResponseEntity<>(course,HttpStatus.OK);
     }
 
-    @PostMapping("/assign-teacher")
+    /*@PostMapping("/assign-teacher")
     public ResponseEntity<Course> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
         Course assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
         return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
@@ -55,7 +56,7 @@ public class CourseController {
     public ResponseEntity<Course> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
         Course enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
         return new ResponseEntity<>(enrolledStudent,HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/by-teacher/{teacherId}")
     public ResponseEntity<List<Course>> getCoursesByTeacher(@PathVariable Long teacherId ){

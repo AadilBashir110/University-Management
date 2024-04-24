@@ -1,5 +1,6 @@
 package com.adil.universitymanagement.controller;
 
+import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
+    public ResponseEntity<TeacherBean> getTeacherById(@PathVariable Long id) {
         try {
-            Teacher teacher = teacherService.getTeacherById(id);
+            TeacherBean teacher = teacherService.getTeacherById(id);
             return new ResponseEntity<>(teacher,HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
