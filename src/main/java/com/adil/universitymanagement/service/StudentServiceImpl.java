@@ -9,7 +9,6 @@ import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     private final CourseService courseService;
 
-    @Transactional
     @Override
    public void addStudent(StudentBean studentBean) {
         Student student = new Student();
@@ -31,17 +29,19 @@ public class StudentServiceImpl implements StudentService{
 
         List<Course> newCourses = new ArrayList<>();
 
-        List<CourseBean> studentCourses = studentBean.getCourseBean();
-        for (CourseBean course : studentCourses) {
-            Course retrievedCourse = courseService.getCourseById(course.getId());
-            if (retrievedCourse != null) {
-                newCourses.add(retrievedCourse);
+        List<Long> courseIds = studentBean.getCourseIds();
+        for (Long courseId : courseIds) {
+            Course course = courseService.getCourseById(courseId);
+            if (course != null) {
+                newCourses.add(course);
+            } else {
+                throw new RuntimeException("No course exists with id "+courseId);
             }
         }
-
         student.setCourses(newCourses);
 
         studentRepository.save(student);
+
     }
 
     @Override

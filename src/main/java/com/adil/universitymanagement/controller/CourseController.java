@@ -47,7 +47,7 @@ public class CourseController {
         return new ResponseEntity<>(course,HttpStatus.OK);
     }
 
-    /*@PostMapping("/assign-teacher")
+    @PostMapping("/assign-teacher")
     public ResponseEntity<Course> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
         Course assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
         return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
@@ -57,7 +57,7 @@ public class CourseController {
     public ResponseEntity<Course> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
         Course enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
         return new ResponseEntity<>(enrolledStudent,HttpStatus.OK);
-    }*/
+    }
 
     @GetMapping("/by-teacher/{teacherId}")
     public ResponseEntity<List<Course>> getCoursesByTeacher(@PathVariable Long teacherId ){

@@ -8,9 +8,9 @@ public interface StudentService {
 
     void addStudent(StudentBean studentBean);
     StudentBean getStudentById(Long id) ;
-     List<StudentBean> getAllStudents();
-     Student updateStudent(Student student);
+    List<StudentBean> getAllStudents();
+    Student updateStudent(Student student);
 
-   // void deleteStudent(Long id);
+    // void deleteStudent(Long id);
 
 }

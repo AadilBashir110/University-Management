@@ -9,24 +9,43 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     @Override
-    public List<Teacher> getAllTeachers() {
-        return teacherRepository.findAll();
+    public List<TeacherBean> getAllTeachers() {
+        return teacherRepository.findAll().stream()
+                .map(teacher -> {
+                    TeacherBean teacherBean = new TeacherBean();
+                    teacherBean.setId(teacher.getId());
+                    teacherBean.setName(teacher.getName());
+                    teacherBean.setEmail(teacher.getEmail());
+
+                    List<Course> courses = teacher.getCourses();
+                    for(Course course: courses){
+                        if(course != null) {
+                            CourseBean courseBean = new CourseBean();
+                            courseBean.setId(course.getId());
+                            courseBean.setName(course.getName());
+
+                            teacherBean.getCourseBean().add(courseBean);
+                        }
+                    }
+                    return teacherBean;
+                })
+                .collect(Collectors.toList());
     }
     @Override
-    public Teacher addTeacher(Teacher teacher) {
-        Teacher newTeacher = new Teacher();
-        newTeacher.setName(teacher.getName());
-        newTeacher.setEmail(teacher.getEmail());
-        newTeacher.setId(teacher.getId());
-        newTeacher.setCourses(teacher.getCourses());
+    public void addTeacher(TeacherBean teacherBean) {
+        Teacher teacher = new Teacher();
+        teacher.setName(teacherBean.getName());
+        teacher.setEmail(teacherBean.getEmail());
+        teacher.setId(teacherBean.getId());
 
-        return teacherRepository.save(newTeacher);
+        teacherRepository.save(teacher);
     }
 
     @Override

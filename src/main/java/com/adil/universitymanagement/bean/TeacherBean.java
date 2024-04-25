@@ -1,7 +1,6 @@
 package com.adil.universitymanagement.bean;
 
 
-import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Teacher;
 
 import java.util.ArrayList;

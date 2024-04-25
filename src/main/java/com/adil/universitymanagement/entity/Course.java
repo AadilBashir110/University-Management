@@ -13,7 +13,7 @@ public class Course {
     private Long id;
     private String name;
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "_id")
     private Teacher teacher;
 
     // Define many-to-many relationship with Student

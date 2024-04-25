@@ -17,8 +17,8 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @GetMapping
-    public ResponseEntity<List<Teacher>> getAllTeachers(){
-        List<Teacher> teacherList = teacherService.getAllTeachers();
+    public ResponseEntity<List<TeacherBean>> getAllTeachers(){
+        List<TeacherBean> teacherList = teacherService.getAllTeachers();
         return new ResponseEntity<>(teacherList,HttpStatus.OK);
     }
 
@@ -34,9 +34,9 @@ public class TeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher) {
-        teacherService.addTeacher(teacher);
-        return new ResponseEntity<>(teacher, HttpStatus.OK);
+    public ResponseEntity<TeacherBean> addTeacher(@RequestBody TeacherBean teacherBean) {
+        teacherService.addTeacher(teacherBean);
+        return new ResponseEntity<>(teacherBean, HttpStatus.OK);
     }
 
     @PutMapping("/update-teacher")

@@ -9,17 +9,17 @@ import java.util.List;
 
 public interface CourseService {
 
-    public List<Course> getAllCourses();
+    List<Course> getAllCourses();
     Course addCourse(Course course);
-    Course getCourseById(Long id);
+    Course getCourseById(Long id);  // Do not convert to bean
     Course updateCourse(Course course);
 
- //  Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);
+    Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 
-  // Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
+    Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
-    public List<Course> findCourseByTeacher(Long teacherId);
-    public List<Course> findCoursesByStudent(Long studentId);
+    List<Course> findCourseByTeacher(Long teacherId);
+    List<Course> findCoursesByStudent(Long studentId);
 
 
 
