@@ -20,8 +20,8 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses(){
-        List<Course> courseList = courseService.getAllCourses();
+    public ResponseEntity<List<CourseBean>> getAllCourses(){
+        List<CourseBean> courseList = courseService.getAllCourses();
         return new ResponseEntity<>(courseList, HttpStatus.OK);
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CourseService {
 
-    List<Course> getAllCourses();
+    List<CourseBean> getAllCourses();
     Course addCourse(Course course);
     Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
     Course updateCourse(Course course);

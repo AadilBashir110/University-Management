@@ -1,5 +1,7 @@
 package com.adil.universitymanagement.service;
 
+import com.adil.universitymanagement.bean.CourseBean;
+import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.Teacher;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +22,16 @@ public class CourseServiceImpl implements CourseService{
     private final TeacherRepository teacherRepository;
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseBean> getAllCourses() {
+        return courseRepository.findAll().stream()
+                .map(course -> {
+                    CourseBean courseBean = new CourseBean();
+                    courseBean.setId(course.getId());
+                    courseBean.setName(course.getName());
+                    courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
+                    return courseBean;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
