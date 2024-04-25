@@ -11,7 +11,7 @@ public interface CourseService {
 
     List<Course> getAllCourses();
     Course addCourse(Course course);
-    Course getCourseById(Long id);  // Do not convert to bean
+    Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
     Course updateCourse(Course course);
 
     Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);

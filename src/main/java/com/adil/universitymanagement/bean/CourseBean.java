@@ -11,11 +11,6 @@ public class CourseBean {
     public CourseBean() {
     }
 
-    public CourseBean(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public CourseBean(Long id, String name, TeacherBean teacherBean) {
         this.id = id;
         this.name = name;

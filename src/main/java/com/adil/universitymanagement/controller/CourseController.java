@@ -4,6 +4,7 @@ import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.CourseIdsRequest;
 import com.adil.universitymanagement.service.CourseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
-    @Autowired
-    private CourseService courseService;
+
+    private final CourseService courseService;
 
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses(){
@@ -23,13 +25,12 @@ public class CourseController {
         return new ResponseEntity<>(courseList, HttpStatus.OK);
     }
 
-   @GetMapping("/{id}")
-    public ResponseEntity<CourseBean> getCourseById(@PathVariable Long id){
-        try{
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseBean> getCourseById(@PathVariable Long id) {
+        try {
             Course course = courseService.getCourseById(id);
             CourseBean courseBean = new CourseBean(course);
-            return new ResponseEntity<>(courseBean,HttpStatus.OK);
-
+            return new ResponseEntity<>(courseBean, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
