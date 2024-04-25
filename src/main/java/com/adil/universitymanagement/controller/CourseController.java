@@ -37,9 +37,9 @@ public class CourseController {
         return null;
     }
     @PostMapping
-    public ResponseEntity<Course> addCourse(@RequestBody Course course){
-        courseService.addCourse(course);
-        return new ResponseEntity<>(course,HttpStatus.OK);
+    public ResponseEntity<CourseBean> addCourse(@RequestBody CourseBean courseBean){
+       courseService.addCourse(courseBean);
+       return new ResponseEntity<>(courseBean,HttpStatus.OK);
     }
 
     @PutMapping("/update-course")
@@ -49,8 +49,8 @@ public class CourseController {
     }
 
     @PostMapping("/assign-teacher")
-    public ResponseEntity<Course> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
-        Course assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
+    public ResponseEntity<CourseBean> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
+        CourseBean assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
         return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
     }
 

@@ -22,6 +22,12 @@ public class Teacher {
     public Teacher() {
     }
 
+    public Teacher(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
     public Teacher(Long id, String name, String email, List<Course> courses) {
         this.id = id;
         this.name = name;

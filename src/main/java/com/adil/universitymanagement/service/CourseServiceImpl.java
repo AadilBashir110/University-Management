@@ -35,14 +35,12 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course addCourse(Course course) {
-        Course newCourse = new Course();
-        newCourse.setName(course.getName());
-        newCourse.setId(course.getId());
-        newCourse.setStudents(course.getStudents());
-        newCourse.setTeacher(course.getTeacher());
+    public void addCourse(CourseBean courseBean) {
+        Course course = new Course();
+        course.setName(courseBean.getName());
+        course.setId(courseBean.getId());
 
-        return courseRepository.save(newCourse);
+        courseRepository.save(course);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
    @Override
-    public Course assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
+    public CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
 
         for (Long courseId : courseIds) {

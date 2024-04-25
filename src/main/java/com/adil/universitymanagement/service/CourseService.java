@@ -10,11 +10,11 @@ import java.util.List;
 public interface CourseService {
 
     List<CourseBean> getAllCourses();
-    Course addCourse(Course course);
+    void addCourse(CourseBean courseBean);
     Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
     Course updateCourse(Course course);
 
-    Course assignTeacherToCourse(List<Long> courseIds, Long teacherId);
+    CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 
     Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
