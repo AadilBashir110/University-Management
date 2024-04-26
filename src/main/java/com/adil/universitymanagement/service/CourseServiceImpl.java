@@ -53,20 +53,12 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course updateCourse(Course course) {
-        Course oldCourse = courseRepository.findById(course.getId()).get();
-
-        if(course.getName()!=null){
-            oldCourse.setName(course.getName());
+    public void updateCourse(CourseBean courseBean) {
+        Course oldCourse = courseRepository.findById(courseBean.getId()).get();
+        if(courseBean.getName()!=null){
+            oldCourse.setName(courseBean.getName());
         }
-        if(course.getStudents()!=null){
-            oldCourse.setStudents(course.getStudents());
-        }
-        if(course.getTeacher()!=null){
-            oldCourse.setTeacher(course.getTeacher());
-        }
-        return courseRepository.save(oldCourse);
-
+        courseRepository.save(oldCourse);
     }
 
    @Override

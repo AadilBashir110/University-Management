@@ -9,7 +9,7 @@ public interface TeacherService {
      void createTeacher(TeacherBean teacherBean);
      TeacherBean getTeacherById(Long id);
      List<TeacherBean> getAllTeachers();
-     Teacher updateTeacher(Teacher teacher);
+     void updateTeacher(TeacherBean teacherBean);
 
    //  void deleteTeacher(Long id);
 

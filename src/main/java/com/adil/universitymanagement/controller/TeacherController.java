@@ -1,8 +1,8 @@
 package com.adil.universitymanagement.controller;
 
 import com.adil.universitymanagement.bean.TeacherBean;
-import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.service.TeacherService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
-    @Autowired
-    private TeacherService teacherService;
+    private final TeacherService teacherService;
 
     @GetMapping
     public ResponseEntity<List<TeacherBean>> getAllTeachers(){
@@ -40,10 +40,9 @@ public class TeacherController {
     }
 
     @PutMapping("/update-teacher")
-    public ResponseEntity<Teacher> updateTeacher(@RequestBody Teacher teacher){
-        teacherService.updateTeacher(teacher);
-        return new ResponseEntity<>(teacher,HttpStatus.OK);
+    public ResponseEntity<TeacherBean> updateTeacher(@RequestBody TeacherBean teacherBean){
+        teacherService.updateTeacher(teacherBean);
+        return new ResponseEntity<>(teacherBean,HttpStatus.OK);
     }
 
-    // Other End Points will go here
 }

@@ -39,8 +39,8 @@ public class StudentController {
     }
 
     @PutMapping("/update-student")
-    public ResponseEntity<Student> updateStudent(@RequestBody Student student){
-        studentService.updateStudent(student);
-        return new ResponseEntity<>(student,HttpStatus.OK);
+    public ResponseEntity<StudentBean> updateStudent(@RequestBody StudentBean studentBean){
+        studentService.updateStudent(studentBean);
+        return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
 }

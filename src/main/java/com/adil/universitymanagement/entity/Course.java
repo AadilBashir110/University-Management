@@ -16,7 +16,7 @@ public class Course {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    // Define many-to-many relationship with Student
+
     @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
 

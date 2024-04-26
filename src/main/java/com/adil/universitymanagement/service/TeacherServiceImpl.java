@@ -74,18 +74,15 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherBean;
     }
     @Override
-    public Teacher updateTeacher(Teacher teacher) {
-        Teacher oldTeacher = teacherRepository.findById(teacher.getId()).get();
-       if(teacher.getName()!=null){
-           oldTeacher.setName(teacher.getName());
+    public void updateTeacher(TeacherBean teacherBean) {
+        Teacher oldTeacher = teacherRepository.findById(teacherBean.getId()).get();
+       if(teacherBean.getName()!=null){
+           oldTeacher.setName(teacherBean.getName());
        }
-       if(teacher.getCourses()!=null){
-           oldTeacher.setCourses(teacher.getCourses());
+       if(teacherBean.getEmail()!=null){
+           oldTeacher.setEmail(teacherBean.getEmail());
        }
-       if(teacher.getEmail()!=null){
-           oldTeacher.setEmail(teacher.getEmail());
-       }
-       return teacherRepository.save(oldTeacher);
+       teacherRepository.save(oldTeacher);
     }
     /*
     @Override

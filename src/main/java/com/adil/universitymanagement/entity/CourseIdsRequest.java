@@ -5,7 +5,6 @@ import java.util.List;
 public class CourseIdsRequest {
         private List<Long> courseIds;
 
-        // Getter and setter for courseIds
         public List<Long> getCourseIds() {
             return courseIds;
         }

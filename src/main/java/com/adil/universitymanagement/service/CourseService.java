@@ -12,7 +12,7 @@ public interface CourseService {
     List<CourseBean> getAllCourses();
     void createCourse(CourseBean courseBean);
     Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
-    Course updateCourse(Course course);
+    void updateCourse(CourseBean courseBean);
 
     CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 

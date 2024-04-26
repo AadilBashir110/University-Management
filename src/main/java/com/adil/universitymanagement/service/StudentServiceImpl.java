@@ -101,20 +101,17 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        Student oldStudent = studentRepository.findById(student.getId()).get();
+    public void updateStudent(StudentBean studentBean) {
+        Student oldStudent = studentRepository.findById(studentBean.getId()).get();
 
-        if(student.getName()!=null){
-            oldStudent.setName(student.getName());
+        if(studentBean.getName()!=null){
+            oldStudent.setName(studentBean.getName());
         }
-        if(student.getEmail()!=null){
-            oldStudent.setEmail(student.getEmail());
-        }
-        if(student.getCourses()!=null){
-            oldStudent.setCourses(student.getCourses());
+        if(studentBean.getEmail()!=null){
+            oldStudent.setEmail(studentBean.getEmail());
         }
 
-        return studentRepository.save(oldStudent);
+        studentRepository.save(oldStudent);
     }
 
    /* @Override

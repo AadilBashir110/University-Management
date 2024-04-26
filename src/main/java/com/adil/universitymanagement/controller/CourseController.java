@@ -42,9 +42,9 @@ public class CourseController {
     }
 
     @PutMapping("/update-course")
-    public ResponseEntity<Course> updateCourse(@RequestBody Course course){
-        courseService.updateCourse(course);
-        return new ResponseEntity<>(course,HttpStatus.OK);
+    public ResponseEntity<CourseBean> updateCourse(@RequestBody CourseBean courseBean){
+        courseService.updateCourse(courseBean);
+        return new ResponseEntity<>(courseBean,HttpStatus.OK);
     }
 
     @PostMapping("/assign-teacher")
