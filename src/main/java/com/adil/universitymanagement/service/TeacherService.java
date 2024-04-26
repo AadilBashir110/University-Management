@@ -1,7 +1,6 @@
 package com.adil.universitymanagement.service;
 
 import com.adil.universitymanagement.bean.TeacherBean;
-import com.adil.universitymanagement.entity.Teacher;
 
 import java.util.List;
 

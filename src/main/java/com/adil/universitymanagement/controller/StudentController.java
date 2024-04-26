@@ -1,7 +1,6 @@
 package com.adil.universitymanagement.controller;
 
 import com.adil.universitymanagement.bean.StudentBean;
-import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
