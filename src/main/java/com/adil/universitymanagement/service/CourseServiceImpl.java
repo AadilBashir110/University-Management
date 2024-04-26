@@ -11,6 +11,7 @@ import com.adil.universitymanagement.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,7 @@ public class CourseServiceImpl implements CourseService{
         return null;
     }
 
-    public Course enrollStudentToCourse(List<Long> courseIds, Long studentId) {
+    public CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId) {
         Student student = studentRepository.findById(studentId).orElse(null);
 
         for (Long courseId : courseIds) {
@@ -96,15 +97,41 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<Course> findCourseByTeacher(Long teacherId) {
+    public List<CourseBean> getCoursesByTeacher(Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
-        return courseRepository .findByTeacher(teacher);
+        List<CourseBean> courseBeans = new ArrayList<>();
+
+        if (teacher != null) {
+            List<Course> teacherCourses = teacher.getCourses();
+            for (Course course : teacherCourses) {
+                CourseBean courseBean = new CourseBean();
+                courseBean.setId(course.getId());
+                courseBean.setName(course.getName());
+                courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
+                courseBeans.add(courseBean);
+            }
+        }
+
+        return courseBeans;
     }
 
+
     @Override
-   public List<Course> findCoursesByStudent(Long studentId) {
+   public List<CourseBean> getCoursesByStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).orElse(null);
-        return courseRepository.findByStudents(student);
+        List<CourseBean> courseBeans = new ArrayList<>();
+
+        if (student != null) {
+            List<Course> studentCourses = student.getCourses();
+            for (Course course : studentCourses) {
+                CourseBean courseBean = new CourseBean();
+                courseBean.setId(course.getId());
+                courseBean.setName(course.getName());
+                courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
+                courseBeans.add(courseBean);
+            }
+        }
+        return courseBeans;
     }
 
 

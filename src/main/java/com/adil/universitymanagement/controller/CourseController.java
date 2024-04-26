@@ -55,19 +55,19 @@ public class CourseController {
     }
 
     @PostMapping("/enroll-student")
-    public ResponseEntity<Course> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
-        Course enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
+    public ResponseEntity<CourseBean> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
+        CourseBean enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
         return new ResponseEntity<>(enrolledStudent,HttpStatus.OK);
     }
 
     @GetMapping("/by-teacher/{teacherId}")
-    public ResponseEntity<List<Course>> getCoursesByTeacher(@PathVariable Long teacherId ){
-        List<Course> courses = courseService.findCourseByTeacher(teacherId);
+    public ResponseEntity<List<CourseBean>> getCoursesByTeacher(@PathVariable Long teacherId ){
+        List<CourseBean> courses = courseService.getCoursesByTeacher(teacherId);
         return new ResponseEntity<>(courses,HttpStatus.OK);
     }
     @GetMapping("/by-student/{studentId}")
-    public ResponseEntity<List<Course>> getCoursesByStudents(@PathVariable Long studentId){
-        List<Course> courses = courseService.findCoursesByStudent(studentId);
+    public ResponseEntity<List<CourseBean>> getCoursesByStudents(@PathVariable Long studentId){
+        List<CourseBean> courses = courseService.getCoursesByStudent(studentId);
         return new ResponseEntity<>(courses,HttpStatus.OK);
     }
 }

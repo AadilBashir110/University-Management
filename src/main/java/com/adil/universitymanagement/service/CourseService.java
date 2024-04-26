@@ -16,10 +16,10 @@ public interface CourseService {
 
     CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 
-    Course enrollStudentToCourse(List<Long> courseIds, Long studentId);
+    CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
-    List<Course> findCourseByTeacher(Long teacherId);
-    List<Course> findCoursesByStudent(Long studentId);
+    List<CourseBean> getCoursesByTeacher(Long teacherId);
+    List<CourseBean> getCoursesByStudent(Long studentId);
 
 
 
