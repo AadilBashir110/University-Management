@@ -33,8 +33,8 @@ public class StudentController {
       return null;
     }
     @PostMapping
-    public ResponseEntity<StudentBean> addStudent(@RequestBody StudentBean studentBean){
-        studentService.addStudent(studentBean);
+    public ResponseEntity<StudentBean> createStudent(@RequestBody StudentBean studentBean){
+        studentService.createStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
 

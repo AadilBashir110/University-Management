@@ -6,8 +6,8 @@ import com.adil.universitymanagement.entity.Teacher;
 import java.util.List;
 
 public interface TeacherService {
-    void addTeacher(TeacherBean teacherBean);
-     TeacherBean getTeacherById(Long id) throws Exception;
+     void createTeacher(TeacherBean teacherBean);
+     TeacherBean getTeacherById(Long id);
      List<TeacherBean> getAllTeachers();
      Teacher updateTeacher(Teacher teacher);
 

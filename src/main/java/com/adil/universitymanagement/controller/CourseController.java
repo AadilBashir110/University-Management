@@ -5,7 +5,6 @@ import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.CourseIdsRequest;
 import com.adil.universitymanagement.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +36,8 @@ public class CourseController {
         return null;
     }
     @PostMapping
-    public ResponseEntity<CourseBean> addCourse(@RequestBody CourseBean courseBean){
-       courseService.addCourse(courseBean);
+    public ResponseEntity<CourseBean> createCourse(@RequestBody CourseBean courseBean){
+       courseService.createCourse(courseBean);
        return new ResponseEntity<>(courseBean,HttpStatus.OK);
     }
 
@@ -66,7 +65,7 @@ public class CourseController {
         return new ResponseEntity<>(courses,HttpStatus.OK);
     }
     @GetMapping("/by-student/{studentId}")
-    public ResponseEntity<List<CourseBean>> getCoursesByStudents(@PathVariable Long studentId){
+    public ResponseEntity<List<CourseBean>> getCoursesByStudent(@PathVariable Long studentId){
         List<CourseBean> courses = courseService.getCoursesByStudent(studentId);
         return new ResponseEntity<>(courses,HttpStatus.OK);
     }

@@ -1,6 +1,5 @@
 package com.adil.universitymanagement.entity;
 
-import com.adil.universitymanagement.bean.TeacherBean;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

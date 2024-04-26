@@ -6,7 +6,7 @@ import com.adil.universitymanagement.entity.Student;
 import java.util.List;
 public interface StudentService {
 
-    void addStudent(StudentBean studentBean);
+    void createStudent(StudentBean studentBean);
     StudentBean getStudentById(Long id) ;
     List<StudentBean> getAllStudents();
     Student updateStudent(Student student);

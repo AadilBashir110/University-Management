@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService{
     private final CourseService courseService;
 
     @Override
-   public void addStudent(StudentBean studentBean) {
+   public void createStudent(StudentBean studentBean) {
         Student student = new Student();
         student.setName(studentBean.getName());
         student.setEmail(studentBean.getEmail());

@@ -36,7 +36,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void addCourse(CourseBean courseBean) {
+    public void createCourse(CourseBean courseBean) {
         Course course = new Course();
         course.setName(courseBean.getName());
         course.setId(courseBean.getId());

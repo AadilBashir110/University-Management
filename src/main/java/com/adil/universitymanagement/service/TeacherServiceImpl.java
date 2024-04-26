@@ -39,7 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
     }
     @Override
-    public void addTeacher(TeacherBean teacherBean) {
+    public void createTeacher(TeacherBean teacherBean) {
         Teacher teacher = new Teacher();
         teacher.setName(teacherBean.getName());
         teacher.setEmail(teacherBean.getEmail());

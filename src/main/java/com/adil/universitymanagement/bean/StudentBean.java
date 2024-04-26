@@ -1,9 +1,6 @@
 package com.adil.universitymanagement.bean;
 
 
-
-import com.adil.universitymanagement.entity.CourseIdsRequest;
-
 import java.util.ArrayList;
 import java.util.List;
 
