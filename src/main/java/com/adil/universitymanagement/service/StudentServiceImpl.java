@@ -7,7 +7,6 @@ import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.User;
-import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.repository.StudentRepository;
 import com.adil.universitymanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,18 +46,6 @@ public class StudentServiceImpl implements StudentService{
 
         studentRepository.save(student);
 
-        User user = new User();
-        user.setUsername(student.getEmail()); // Use email as username for simplicity
-        user.setPassword(generateRandomPassword()); // Generate a random password
-        user.setRole(Role.STUDENT); // Set the role for the user
-
-        // Save the user entity
-        userRepository.save(user);
-    }
-
-    private String generateRandomPassword() {
-        // Implement your logic to generate a random password
-        return UUID.randomUUID().toString();
     }
 
     @Override
