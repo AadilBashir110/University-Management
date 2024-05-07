@@ -1,8 +1,8 @@
 package com.adil.universitymanagement.controller;
 
-import com.adil.universitymanagement.config.AuthenticationRequest;
 import com.adil.universitymanagement.config.AuthenticationResponse;
 import com.adil.universitymanagement.config.AuthenticationService;
+import com.adil.universitymanagement.config.LoginRequest;
 import com.adil.universitymanagement.config.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody AuthenticationRequest request
+            @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }

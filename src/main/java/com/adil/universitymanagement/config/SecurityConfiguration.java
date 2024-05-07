@@ -25,6 +25,10 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
+                .requestMatchers(request -> "/api/v1/student/**".equals(request.getRequestURI()) ||
+                        "/api/v1/teacher/**".equals(request.getRequestURI())).hasRole("TEACHER")
+                .requestMatchers(request -> "/api/v1/courses/enroll-student".equals(request.getRequestURI())).hasRole("STUDENT")
+                .requestMatchers(request -> "/api/v1/courses/**".equals(request.getRequestURI())).hasRole("TEACHER")
                 .requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
