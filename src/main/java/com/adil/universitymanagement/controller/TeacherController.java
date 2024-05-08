@@ -5,6 +5,7 @@ import com.adil.universitymanagement.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/teacher")
+@PreAuthorize("hasRole('TEACHER')")
 public class TeacherController {
     private final TeacherService teacherService;
 

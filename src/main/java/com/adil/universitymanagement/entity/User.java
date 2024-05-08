@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -18,11 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
-        })
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,16 +28,12 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
-
-    @NotBlank
     @Size(max = 120)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,7 +47,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

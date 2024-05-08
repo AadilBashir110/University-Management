@@ -2,7 +2,12 @@ package com.adil.universitymanagement.config;
 
 import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.User;
+import com.adil.universitymanagement.payload.response.AuthenticationResponse;
+import com.adil.universitymanagement.payload.request.LoginRequest;
+import com.adil.universitymanagement.payload.request.RegisterRequest;
 import com.adil.universitymanagement.repository.UserRepository;
+import com.adil.universitymanagement.service.StudentService;
+import com.adil.universitymanagement.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,16 +22,29 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final StudentService studentService;
+    private final TeacherService teacherService;
+
     public AuthenticationResponse register(RegisterRequest request) {
        var user = User.builder()
                .username(request.getUsername())
-               .email(request.getEmail())
                .password(passwordEncoder.encode(request.getPassword()))
                .role(request.getRole())
                .build();
-       userRepository.save(user);
-       var jwtToken = jwtService.generateToken(user);
-       return AuthenticationResponse.builder()
+       if(request.getRole().equals(Role.TEACHER)) {
+          if(request.getTeacherBean().getEmail().equals(request.getUsername())){
+              teacherService.createTeacher(request.getTeacherBean());
+              userRepository.save(user);
+          }
+          else {
+              throw new RuntimeException("Invalid teacher username");
+          }
+       }
+       else {
+           throw new RuntimeException("Invalid role specified");
+       }
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
                .token(jwtToken)
                .build();
     }
@@ -34,11 +52,12 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getEmail())
+
+        var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

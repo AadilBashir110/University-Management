@@ -1,9 +1,9 @@
 package com.adil.universitymanagement.controller;
 
-import com.adil.universitymanagement.config.AuthenticationResponse;
 import com.adil.universitymanagement.config.AuthenticationService;
-import com.adil.universitymanagement.config.LoginRequest;
-import com.adil.universitymanagement.config.RegisterRequest;
+import com.adil.universitymanagement.payload.response.AuthenticationResponse;
+import com.adil.universitymanagement.payload.request.LoginRequest;
+import com.adil.universitymanagement.payload.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +25,8 @@ public class AuthController {
         return ResponseEntity.ok(service.register(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));

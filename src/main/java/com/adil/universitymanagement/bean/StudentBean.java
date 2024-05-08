@@ -13,6 +13,7 @@ public class StudentBean {
 
     private List<CourseBean> courseBean = new ArrayList<>();
     private List<Long> courseIds;
+
     public StudentBean() {
     }
 

@@ -5,6 +5,7 @@ import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.bean.StudentBean;
 import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.User;
 import com.adil.universitymanagement.repository.StudentRepository;
@@ -23,6 +24,7 @@ public class StudentServiceImpl implements StudentService{
     private final CourseService courseService;
 
     private final UserRepository userRepository;
+
 
     @Override
    public void createStudent(StudentBean studentBean) {
@@ -46,6 +48,12 @@ public class StudentServiceImpl implements StudentService{
 
         studentRepository.save(student);
 
+        User user = new User();
+        user.setUsername(studentBean.getEmail());
+        user.setPassword("student123");
+        user.setRole(Role.STUDENT);
+
+        userRepository.save(user);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.adil.universitymanagement.config;
+package com.adil.universitymanagement.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
