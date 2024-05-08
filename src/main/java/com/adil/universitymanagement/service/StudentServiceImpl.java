@@ -11,6 +11,7 @@ import com.adil.universitymanagement.entity.User;
 import com.adil.universitymanagement.repository.StudentRepository;
 import com.adil.universitymanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     private final CourseService courseService;
-
     private final UserRepository userRepository;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    String encodedPassword = passwordEncoder.encode("student123");
 
     @Override
    public void createStudent(StudentBean studentBean) {
@@ -50,7 +52,7 @@ public class StudentServiceImpl implements StudentService{
 
         User user = new User();
         user.setUsername(studentBean.getEmail());
-        user.setPassword("student123");
+        user.setPassword(encodedPassword);
         user.setRole(Role.STUDENT);
 
         userRepository.save(user);
