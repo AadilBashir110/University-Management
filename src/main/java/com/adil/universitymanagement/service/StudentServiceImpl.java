@@ -26,14 +26,12 @@ public class StudentServiceImpl implements StudentService{
     private final UserRepository userRepository;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    String encodedPassword = passwordEncoder.encode("student123");
 
     @Override
    public void createStudent(StudentBean studentBean) {
         Student student = new Student();
         student.setName(studentBean.getName());
         student.setEmail(studentBean.getEmail());
-        student.setId(studentBean.getId());
 
         List<Course> newCourses = new ArrayList<>();
 
@@ -50,12 +48,16 @@ public class StudentServiceImpl implements StudentService{
 
         studentRepository.save(student);
 
-        User user = new User();
-        user.setUsername(studentBean.getEmail());
-        user.setPassword(encodedPassword);
-        user.setRole(Role.STUDENT);
+        if(studentBean.getPassword()!=null) {
+            String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
 
-        userRepository.save(user);
+            User user = new User();
+            user.setUsername(studentBean.getEmail());
+            user.setPassword(encodedPassword);
+            user.setRole(Role.STUDENT);
+
+            userRepository.save(user);
+        }
     }
 
     @Override

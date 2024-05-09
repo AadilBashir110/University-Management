@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/student")
-@PreAuthorize("hasRole('TEACHER')")
 public class StudentController {
 
     private final StudentService studentService;

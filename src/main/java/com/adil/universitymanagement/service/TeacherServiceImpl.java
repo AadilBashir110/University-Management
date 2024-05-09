@@ -3,11 +3,13 @@ package com.adil.universitymanagement.service;
 import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.entity.User;
 import com.adil.universitymanagement.repository.TeacherRepository;
 import com.adil.universitymanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserRepository userRepository;
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public List<TeacherBean> getAllTeachers() {
@@ -47,11 +51,19 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = new Teacher();
         teacher.setName(teacherBean.getName());
         teacher.setEmail(teacherBean.getEmail());
-        teacher.setId(teacherBean.getId());
 
         teacherRepository.save(teacher);
 
+        if(teacherBean.getPassword()!=null) {
+            String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
 
+            User user = new User();
+            user.setUsername(teacherBean.getEmail());
+            user.setPassword(encodedPassword);
+            user.setRole(Role.TEACHER);
+
+            userRepository.save(user);
+        }
     }
 
     @Override

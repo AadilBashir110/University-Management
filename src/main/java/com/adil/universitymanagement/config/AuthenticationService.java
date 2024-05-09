@@ -40,9 +40,19 @@ public class AuthenticationService {
               throw new RuntimeException("Invalid teacher username");
           }
        }
+       else if(request.getRole().equals(Role.STUDENT)) {
+           if(request.getStudentBean().getEmail().equals(request.getUsername())){
+               studentService.createStudent(request.getStudentBean());
+               userRepository.save(user);
+           }
+           else {
+               throw new RuntimeException("Invalid teacher username");
+           }
+       }
        else {
            throw new RuntimeException("Invalid role specified");
        }
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                .token(jwtToken)

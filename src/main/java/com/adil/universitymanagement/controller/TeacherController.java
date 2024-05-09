@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/teacher")
-@PreAuthorize("hasRole('TEACHER')")
 public class TeacherController {
     private final TeacherService teacherService;
 
@@ -24,6 +23,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<TeacherBean> getTeacherById(@PathVariable Long id) {
         try {
             TeacherBean teacher = teacherService.getTeacherById(id);

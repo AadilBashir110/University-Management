@@ -1,10 +1,18 @@
 package com.adil.universitymanagement.bean;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class StudentBean {
 
     private Long id;
@@ -13,55 +21,5 @@ public class StudentBean {
 
     private List<CourseBean> courseBean = new ArrayList<>();
     private List<Long> courseIds;
-
-    public StudentBean() {
-    }
-
-    public StudentBean(Long id, String name, String email, List<CourseBean> courseBean, List<Long> courseIds) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.courseBean = courseBean;
-        this.courseIds = courseIds;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<CourseBean> getCourseBean() {
-        return courseBean;
-    }
-
-    public void setCourseBean(List<CourseBean> courseBean) {
-        this.courseBean = courseBean;
-    }
-
-    public List<Long> getCourseIds() {
-        return courseIds;
-    }
-
-    public void setCourseIdsRequests(List<Long> courseIds) {
-        this.courseIds = courseIds;
-    }
+    private String password;
 }
