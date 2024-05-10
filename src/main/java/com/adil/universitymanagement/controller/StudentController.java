@@ -14,17 +14,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/student")
-@PreAuthorize("hasRole('ROLE_TEACHER')")
 public class StudentController {
 
     private final StudentService studentService;
 
     @GetMapping("/all-students")
+    @PreAuthorize("hasRole('ROLE_TEACHER')")
     public ResponseEntity<List<StudentBean>> getALlStudents(){
         List<StudentBean> studentList = studentService.getAllStudents();
         return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_TEACHER') OR hasRole('ROLE_STUDENT')")
     public ResponseEntity<StudentBean> getStudentById(@PathVariable Long id){
       try {
           StudentBean student = studentService.getStudentById(id);
@@ -35,12 +36,14 @@ public class StudentController {
       return null;
     }
     @PostMapping("/add-student")
+    @PreAuthorize("hasRole('ROLE_TEACHER')")
     public ResponseEntity<StudentBean> createStudent(@RequestBody StudentBean studentBean){
         studentService.createStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
 
     @PutMapping("/update-student")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
     public ResponseEntity<StudentBean> updateStudent(@RequestBody StudentBean studentBean){
         studentService.updateStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
