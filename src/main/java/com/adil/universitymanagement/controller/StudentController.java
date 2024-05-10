@@ -5,6 +5,7 @@ import com.adil.universitymanagement.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +13,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/student")
+@RequestMapping("/api/student")
+@PreAuthorize("hasRole('ROLE_TEACHER')")
 public class StudentController {
 
     private final StudentService studentService;
 
-    @GetMapping
+    @GetMapping("/all-students")
     public ResponseEntity<List<StudentBean>> getALlStudents(){
         List<StudentBean> studentList = studentService.getAllStudents();
         return new ResponseEntity<>(studentList,HttpStatus.OK);
@@ -32,7 +34,7 @@ public class StudentController {
       }
       return null;
     }
-    @PostMapping
+    @PostMapping("/add-student")
     public ResponseEntity<StudentBean> createStudent(@RequestBody StudentBean studentBean){
         studentService.createStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);

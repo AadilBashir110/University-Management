@@ -60,7 +60,7 @@ public class TeacherServiceImpl implements TeacherService {
             User user = new User();
             user.setUsername(teacherBean.getEmail());
             user.setPassword(encodedPassword);
-            user.setRole(Role.TEACHER);
+            user.setRole(Role.ROLE_TEACHER);
 
             userRepository.save(user);
         }

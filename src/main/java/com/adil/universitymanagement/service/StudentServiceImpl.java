@@ -54,7 +54,7 @@ public class StudentServiceImpl implements StudentService{
             User user = new User();
             user.setUsername(studentBean.getEmail());
             user.setPassword(encodedPassword);
-            user.setRole(Role.STUDENT);
+            user.setRole(Role.ROLE_STUDENT);
 
             userRepository.save(user);
         }

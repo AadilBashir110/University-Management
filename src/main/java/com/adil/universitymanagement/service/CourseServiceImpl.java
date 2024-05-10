@@ -39,6 +39,7 @@ public class CourseServiceImpl implements CourseService{
     public void createCourse(CourseBean courseBean) {
         Course course = new Course();
         course.setName(courseBean.getName());
+        course.setId(courseBean.getId());
 
         courseRepository.save(course);
     }

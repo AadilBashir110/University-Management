@@ -31,7 +31,7 @@ public class AuthenticationService {
                .password(passwordEncoder.encode(request.getPassword()))
                .role(request.getRole())
                .build();
-       if(request.getRole().equals(Role.TEACHER)) {
+       if(request.getRole().equals(Role.ROLE_TEACHER)) {
           if(request.getTeacherBean().getEmail().equals(request.getUsername())){
               teacherService.createTeacher(request.getTeacherBean());
               userRepository.save(user);
@@ -40,7 +40,7 @@ public class AuthenticationService {
               throw new RuntimeException("Invalid teacher username");
           }
        }
-       else if(request.getRole().equals(Role.STUDENT)) {
+       else if(request.getRole().equals(Role.ROLE_STUDENT)) {
            if(request.getStudentBean().getEmail().equals(request.getUsername())){
                studentService.createStudent(request.getStudentBean());
                userRepository.save(user);
