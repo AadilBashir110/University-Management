@@ -24,6 +24,7 @@ public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     private final CourseService courseService;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService{
         student.setCourses(newCourses);
 
         studentRepository.save(student);
-
+        // If a teacher creates a student
         if(studentBean.getPassword()!=null) {
             String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
 
@@ -117,19 +118,28 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void updateStudent(StudentBean studentBean) {
+    public void updateStudent(StudentBean studentBean, String username) {
         Student oldStudent = studentRepository.findById(studentBean.getId()).get();
+        if(oldStudent.getEmail() == username){
+            String oldStudentEmail = oldStudent.getEmail();
+            if(studentBean.getName()!=null){
+                oldStudent.setName(studentBean.getName());
+            }
+            if(studentBean.getEmail()!=null){
+                oldStudent.setEmail(studentBean.getEmail());
+            }
 
-        if(studentBean.getName()!=null){
-            oldStudent.setName(studentBean.getName());
+            studentRepository.save(oldStudent);
+            // Update that student user when the student is updated
+            String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
+
+            userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
         }
-        if(studentBean.getEmail()!=null){
-            oldStudent.setEmail(studentBean.getEmail());
+        else {
+            throw new RuntimeException("You cannot modify other student details");
         }
 
-        studentRepository.save(oldStudent);
     }
-
    /* @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);

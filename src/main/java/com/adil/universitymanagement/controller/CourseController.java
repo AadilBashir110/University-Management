@@ -74,7 +74,7 @@ public class CourseController {
         return new ResponseEntity<>(courses,HttpStatus.OK);
     }
     @GetMapping("/by-student/{studentId}")
-    @PreAuthorize("hasRole('ROLE_TEACHER')")
+    @PreAuthorize("hasRole('ROLE_TEACHER') OR hasRole('ROLE_STUDENT')")
     public ResponseEntity<List<CourseBean>> getCoursesByStudent(@PathVariable Long studentId){
         List<CourseBean> courses = courseService.getCoursesByStudent(studentId);
         return new ResponseEntity<>(courses,HttpStatus.OK);

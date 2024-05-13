@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -54,6 +55,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         teacherRepository.save(teacher);
 
+        // If a teacher creates another teacher
         if(teacherBean.getPassword()!=null) {
             String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
 
@@ -94,13 +96,19 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void updateTeacher(TeacherBean teacherBean) {
         Teacher oldTeacher = teacherRepository.findById(teacherBean.getId()).get();
-       if(teacherBean.getName()!=null){
+        String oldTeacherEmail = oldTeacher.getEmail();
+        if(teacherBean.getName()!=null){
            oldTeacher.setName(teacherBean.getName());
-       }
-       if(teacherBean.getEmail()!=null){
+        }
+        if(teacherBean.getEmail()!=null){
            oldTeacher.setEmail(teacherBean.getEmail());
-       }
-       teacherRepository.save(oldTeacher);
+        }
+        teacherRepository.save(oldTeacher);
+
+        //Update that teacher user when the teacher is updated
+        String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
+
+        userService.updateUser(oldTeacherEmail,teacherBean.getEmail(),encodedPassword);
     }
     /*
     @Override

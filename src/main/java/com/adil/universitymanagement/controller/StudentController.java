@@ -1,7 +1,9 @@
 package com.adil.universitymanagement.controller;
 
 import com.adil.universitymanagement.bean.StudentBean;
+import com.adil.universitymanagement.entity.User;
 import com.adil.universitymanagement.service.StudentService;
+import com.adil.universitymanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +20,8 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+
+    private final UserService userService;
 
     @GetMapping("/all-students")
     @PreAuthorize("hasRole('ROLE_TEACHER')")
@@ -44,8 +49,11 @@ public class StudentController {
 
     @PutMapping("/update-student")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public ResponseEntity<StudentBean> updateStudent(@RequestBody StudentBean studentBean){
-        studentService.updateStudent(studentBean);
+    public ResponseEntity<StudentBean> updateStudent(@RequestHeader("Authorization")String jwt,
+            @RequestBody StudentBean studentBean){
+        User reqUser = userService.findUserByJwt(jwt).orElseThrow();
+        System.out.println(reqUser.getUsername());
+        studentService.updateStudent(studentBean,reqUser.getUsername());
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
 }
