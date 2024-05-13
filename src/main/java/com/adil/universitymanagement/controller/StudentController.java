@@ -52,7 +52,6 @@ public class StudentController {
     public ResponseEntity<StudentBean> updateStudent(@RequestHeader("Authorization")String jwt,
             @RequestBody StudentBean studentBean){
         User reqUser = userService.findUserByJwt(jwt).orElseThrow();
-        System.out.println(reqUser.getUsername());
         studentService.updateStudent(studentBean,reqUser.getUsername());
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
