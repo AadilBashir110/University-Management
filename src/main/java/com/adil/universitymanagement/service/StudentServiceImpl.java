@@ -64,28 +64,36 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public StudentBean getStudentById(Long id){
         if(id==null){
-            throw new RuntimeException("could not find student");
+            throw new RuntimeException("Could not find student");
         }
         Student student = studentRepository.findById(id).orElse(null);
-        StudentBean studentBean = new StudentBean();
-        studentBean.setId(student.getId());
-        studentBean.setName(student.getName());
-        studentBean.setEmail(student.getEmail());
 
-        List<Course> courses = student.getCourses();
-        for(Course course: courses){
-            if(course != null) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setId(course.getId());
-                courseBean.setName(course.getName());
-                courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
-                        course.getTeacher().getName(),
-                        course.getTeacher().getEmail()));
+        // Check whether logged in user is this student or not
+       if(userService.getUsernameFromToken().equals(student.getEmail())) {
+           StudentBean studentBean = new StudentBean();
+           studentBean.setId(student.getId());
+           studentBean.setName(student.getName());
+           studentBean.setEmail(student.getEmail());
 
-                studentBean.getCourseBean().add(courseBean);
-            }
-        }
-        return studentBean;
+           List<Course> courses = student.getCourses();
+           for (Course course : courses) {
+               if (course != null) {
+                   CourseBean courseBean = new CourseBean();
+                   courseBean.setId(course.getId());
+                   courseBean.setName(course.getName());
+                   courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
+                           course.getTeacher().getName(),
+                           course.getTeacher().getEmail()));
+
+                   studentBean.getCourseBean().add(courseBean);
+               }
+           }
+           return studentBean;
+       }
+       else {
+           throw new RuntimeException("You cannot access other student details");
+       }
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.adil.universitymanagement.service;
 
+import com.adil.universitymanagement.config.JwtAuthenticationFilter;
 import com.adil.universitymanagement.config.JwtService;
 import com.adil.universitymanagement.entity.User;
 import com.adil.universitymanagement.repository.UserRepository;
@@ -13,20 +14,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    private final JwtService jwtService;
+    private final JwtAuthenticationFilter authenticationFilter;
     private final UserRepository userRepository;
 
-    @Override
-    public Optional<User> findUserByJwt(String jwt) {
+  /*  @Override
+    public Optional<User> findUserByJwt() {
 
-        String username = jwtService.extractUsername(jwt);
+       String username = jwtService.extractUsername();
 
-        Optional<User> user = userRepository.findByUsername(username);
+       Optional<User> user = userRepository.findByUsername(username);
 
         return user;
+    }*/
+
+    @Override
+    public String getUsernameFromToken() {
+        return authenticationFilter.getEmailFromToken();
     }
 
-    public void updateUser(String username,String newUsername,String password){
+    public void updateUser(String username, String newUsername, String password){
         User user = userRepository.findByUsername(username).get();
         user.setUsername(newUsername);
         user.setPassword(password);

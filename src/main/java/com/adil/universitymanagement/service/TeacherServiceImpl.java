@@ -74,25 +74,32 @@ public class TeacherServiceImpl implements TeacherService {
         if(id==null){
             throw new RuntimeException("could not find teacher");
         }
+
         Teacher teacher = teacherRepository.findById(id).orElse(null);
-        TeacherBean teacherBean = new TeacherBean();
 
-        teacherBean.setId(teacher.getId());
-        teacherBean.setName(teacher.getName());
-        teacherBean.setEmail(teacher.getEmail());
+        if(userService.getUsernameFromToken().equals(teacher.getEmail())){
+            TeacherBean teacherBean = new TeacherBean();
 
-        List<Course> teacherCourses = teacher.getCourses();
-        for(Course course: teacherCourses){
-            if(course != null) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setId(course.getId());
-                courseBean.setName(course.getName());
+            teacherBean.setId(teacher.getId());
+            teacherBean.setName(teacher.getName());
+            teacherBean.setEmail(teacher.getEmail());
 
-                teacherBean.getCourseBean().add(courseBean);
+            List<Course> teacherCourses = teacher.getCourses();
+            for(Course course: teacherCourses){
+                if(course != null) {
+                    CourseBean courseBean = new CourseBean();
+                    courseBean.setId(course.getId());
+                    courseBean.setName(course.getName());
+
+                    teacherBean.getCourseBean().add(courseBean);
+                }
             }
+            return teacherBean;
+        }
+        else {
+            throw new RuntimeException("You cannot access other teacher details");
         }
 
-        return teacherBean;
     }
     @Override
     public void updateTeacher(TeacherBean teacherBean) {
