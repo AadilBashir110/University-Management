@@ -47,6 +47,7 @@ public class TeacherServiceImpl implements TeacherService {
                 })
                 .collect(Collectors.toList());
     }
+
     @Override
     public void createTeacher(TeacherBean teacherBean) {
         Teacher teacher = new Teacher();
@@ -98,10 +99,10 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher oldTeacher = teacherRepository.findById(teacherBean.getId()).get();
         String oldTeacherEmail = oldTeacher.getEmail();
         if(teacherBean.getName()!=null){
-           oldTeacher.setName(teacherBean.getName());
+            oldTeacher.setName(teacherBean.getName());
         }
         if(teacherBean.getEmail()!=null){
-           oldTeacher.setEmail(teacherBean.getEmail());
+            oldTeacher.setEmail(teacherBean.getEmail());
         }
         teacherRepository.save(oldTeacher);
 
@@ -110,6 +111,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         userService.updateUser(oldTeacherEmail,teacherBean.getEmail(),encodedPassword);
     }
+
     /*
     @Override
     public void deleteTeacher(Long id) {

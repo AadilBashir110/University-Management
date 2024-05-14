@@ -118,28 +118,24 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void updateStudent(StudentBean studentBean, String username) {
+    public void updateStudent(StudentBean studentBean) {
         Student oldStudent = studentRepository.findById(studentBean.getId()).get();
-        if(oldStudent.getEmail() == username){
-            String oldStudentEmail = oldStudent.getEmail();
-            if(studentBean.getName()!=null){
+        String oldStudentEmail = oldStudent.getEmail();
+        if(studentBean.getName()!=null){
                 oldStudent.setName(studentBean.getName());
-            }
-            if(studentBean.getEmail()!=null){
+        }
+        if(studentBean.getEmail()!=null){
                 oldStudent.setEmail(studentBean.getEmail());
-            }
-
-            studentRepository.save(oldStudent);
-            // Update that student user when the student is updated
-            String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
-
-            userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
-        }
-        else {
-            throw new RuntimeException("You cannot modify other student details");
         }
 
-    }
+        studentRepository.save(oldStudent);
+
+        //Update that student user when the student is updated
+        String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
+
+        userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
+        }
+
    /* @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);

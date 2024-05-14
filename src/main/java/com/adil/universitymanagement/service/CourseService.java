@@ -18,8 +18,6 @@ public interface CourseService {
 
     CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
-    List<CourseBean> getCoursesByTeacher(Long teacherId);
-    List<CourseBean> getCoursesByStudent(Long studentId);
 
 
 

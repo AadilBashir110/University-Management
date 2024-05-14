@@ -9,7 +9,7 @@ public interface StudentService {
     void createStudent(StudentBean studentBean);
     StudentBean getStudentById(Long id) ;
     List<StudentBean> getAllStudents();
-    void updateStudent(StudentBean studentBean, String username);
+    void updateStudent(StudentBean studentBean);
 
     // void deleteStudent(Long id);
 

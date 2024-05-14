@@ -48,9 +48,12 @@ public class AuthenticationService {
            else {
                throw new RuntimeException("Invalid teacher username");
            }
+       } else if (request.getRole().equals(Role.ROLE_ADMIN)) {
+           System.out.println("Admin created successfully");
+           userRepository.save(user);
        }
        else {
-           throw new RuntimeException("Invalid role specified");
+           System.out.println("Invalid role specified");
        }
 
         var jwtToken = jwtService.generateToken(user);

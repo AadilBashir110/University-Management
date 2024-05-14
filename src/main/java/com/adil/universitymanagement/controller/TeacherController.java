@@ -13,17 +13,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/teacher")
-@PreAuthorize("hasRole('ROLE_TEACHER')")
 public class TeacherController {
     private final TeacherService teacherService;
 
-    @GetMapping("/all-teachers")
+    @GetMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<TeacherBean>> getAllTeachers(){
         List<TeacherBean> teacherList = teacherService.getAllTeachers();
         return new ResponseEntity<>(teacherList,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_TEACHER')")
     public ResponseEntity<TeacherBean> getTeacherById(@PathVariable Long id) {
         try {
             TeacherBean teacher = teacherService.getTeacherById(id);
@@ -34,13 +35,15 @@ public class TeacherController {
         return null;
     }
 
-    @PostMapping("/add-teacher")
+    @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<TeacherBean> createTeacher(@RequestBody TeacherBean teacherBean) {
         teacherService.createTeacher(teacherBean);
         return new ResponseEntity<>(teacherBean, HttpStatus.OK);
     }
 
     @PutMapping("/update-teacher")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<TeacherBean> updateTeacher(@RequestBody TeacherBean teacherBean){
         teacherService.updateTeacher(teacherBean);
         return new ResponseEntity<>(teacherBean,HttpStatus.OK);

@@ -88,45 +88,6 @@ public class CourseServiceImpl implements CourseService{
         return null;
     }
 
-    @Override
-    public List<CourseBean> getCoursesByTeacher(Long teacherId) {
-        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
-        List<CourseBean> courseBeans = new ArrayList<>();
-
-        if (teacher != null) {
-            List<Course> teacherCourses = teacher.getCourses();
-            for (Course course : teacherCourses) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setId(course.getId());
-                courseBean.setName(course.getName());
-                courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
-                courseBeans.add(courseBean);
-            }
-        }
-
-        return courseBeans;
-    }
-
-
-    @Override
-   public List<CourseBean> getCoursesByStudent(Long studentId) {
-        Student student = studentRepository.findById(studentId).orElse(null);
-        List<CourseBean> courseBeans = new ArrayList<>();
-
-        if (student != null) {
-            List<Course> studentCourses = student.getCourses();
-            for (Course course : studentCourses) {
-                CourseBean courseBean = new CourseBean();
-                courseBean.setId(course.getId());
-                courseBean.setName(course.getName());
-                courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
-                courseBeans.add(courseBean);
-            }
-        }
-        return courseBeans;
-    }
-
-
      /* @Override
     public void deleteCourse(Long id) {
         courseRepository.deleteById(id);
