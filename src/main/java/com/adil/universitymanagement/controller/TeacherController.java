@@ -48,5 +48,4 @@ public class TeacherController {
         teacherService.updateTeacher(teacherBean);
         return new ResponseEntity<>(teacherBean,HttpStatus.OK);
     }
-
 }

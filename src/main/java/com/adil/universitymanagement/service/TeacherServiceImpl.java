@@ -131,9 +131,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     }
 
-   /* @Override
+    @Override
     public void deleteTeacher(Long id) {
 
     }
-*/
+
 }
