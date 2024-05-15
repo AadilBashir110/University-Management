@@ -21,7 +21,7 @@ public class StudentController {
 
     @GetMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<StudentBean>> getALlStudents(){
+    public ResponseEntity<List<StudentBean>> getAllStudents(){
         List<StudentBean> studentList = studentService.getAllStudents();
         return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class StudentController {
     }
 
     @PutMapping("/update-student")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_STUDENT')")
     public ResponseEntity<StudentBean> updateStudent(@RequestBody StudentBean studentBean){
         studentService.updateStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);

@@ -72,34 +72,37 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherBean getTeacherById(Long id) {
         if(id==null){
-            throw new RuntimeException("could not find teacher");
+            throw new RuntimeException("Could not find teacher");
         }
-
         Teacher teacher = teacherRepository.findById(id).orElse(null);
+        if(teacher!=null){
+            if(userService.getUsernameFromToken().equals(teacher.getEmail())
+                    || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
+                TeacherBean teacherBean = new TeacherBean();
 
-        if(userService.getUsernameFromToken().equals(teacher.getEmail())){
-            TeacherBean teacherBean = new TeacherBean();
+                teacherBean.setId(teacher.getId());
+                teacherBean.setName(teacher.getName());
+                teacherBean.setEmail(teacher.getEmail());
 
-            teacherBean.setId(teacher.getId());
-            teacherBean.setName(teacher.getName());
-            teacherBean.setEmail(teacher.getEmail());
+                List<Course> teacherCourses = teacher.getCourses();
+                for(Course course: teacherCourses){
+                    if(course != null) {
+                        CourseBean courseBean = new CourseBean();
+                        courseBean.setId(course.getId());
+                        courseBean.setName(course.getName());
 
-            List<Course> teacherCourses = teacher.getCourses();
-            for(Course course: teacherCourses){
-                if(course != null) {
-                    CourseBean courseBean = new CourseBean();
-                    courseBean.setId(course.getId());
-                    courseBean.setName(course.getName());
-
-                    teacherBean.getCourseBean().add(courseBean);
+                        teacherBean.getCourseBean().add(courseBean);
+                    }
                 }
+                return teacherBean;
             }
-            return teacherBean;
+            else {
+                throw new RuntimeException("You cannot access other teacher details");
+            }
         }
         else {
-            throw new RuntimeException("You cannot access other teacher details");
+            throw new RuntimeException("No teacher exist with id "+id);
         }
-
     }
     @Override
     public void updateTeacher(TeacherBean teacherBean) {

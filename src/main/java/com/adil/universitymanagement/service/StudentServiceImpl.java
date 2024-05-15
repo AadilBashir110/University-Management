@@ -67,33 +67,37 @@ public class StudentServiceImpl implements StudentService{
             throw new RuntimeException("Could not find student");
         }
         Student student = studentRepository.findById(id).orElse(null);
+        if(student!=null){
+            // Check whether logged in user is this student or not
+            if(userService.getUsernameFromToken().equals(student.getEmail())
+                    || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)) {
+                StudentBean studentBean = new StudentBean();
+                studentBean.setId(student.getId());
+                studentBean.setName(student.getName());
+                studentBean.setEmail(student.getEmail());
 
-        // Check whether logged in user is this student or not
-       if(userService.getUsernameFromToken().equals(student.getEmail())) {
-           StudentBean studentBean = new StudentBean();
-           studentBean.setId(student.getId());
-           studentBean.setName(student.getName());
-           studentBean.setEmail(student.getEmail());
+                List<Course> courses = student.getCourses();
+                for (Course course : courses) {
+                    if (course != null) {
+                        CourseBean courseBean = new CourseBean();
+                        courseBean.setId(course.getId());
+                        courseBean.setName(course.getName());
+                        courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
+                                course.getTeacher().getName(),
+                                course.getTeacher().getEmail()));
 
-           List<Course> courses = student.getCourses();
-           for (Course course : courses) {
-               if (course != null) {
-                   CourseBean courseBean = new CourseBean();
-                   courseBean.setId(course.getId());
-                   courseBean.setName(course.getName());
-                   courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
-                           course.getTeacher().getName(),
-                           course.getTeacher().getEmail()));
-
-                   studentBean.getCourseBean().add(courseBean);
-               }
-           }
-           return studentBean;
-       }
-       else {
-           throw new RuntimeException("You cannot access other student details");
-       }
-
+                        studentBean.getCourseBean().add(courseBean);
+                    }
+                }
+                return studentBean;
+            }
+            else {
+                throw new RuntimeException("You cannot access other student details");
+            }
+        }
+        else {
+            throw new RuntimeException("No student exist with id "+id);
+        }
     }
 
     @Override
@@ -128,21 +132,24 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void updateStudent(StudentBean studentBean) {
         Student oldStudent = studentRepository.findById(studentBean.getId()).get();
-        String oldStudentEmail = oldStudent.getEmail();
-        if(studentBean.getName()!=null){
+            String oldStudentEmail = oldStudent.getEmail();
+            if(studentBean.getName()!=null){
                 oldStudent.setName(studentBean.getName());
-        }
-        if(studentBean.getEmail()!=null){
+            }
+            if(studentBean.getEmail()!=null){
                 oldStudent.setEmail(studentBean.getEmail());
-        }
+            }
 
-        studentRepository.save(oldStudent);
+            studentRepository.save(oldStudent);
 
-        //Update that student user when the student is updated
-        String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
+            //Update that student user when the student is updated
+            String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
 
-        userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
-        }
+            userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
+    }
+}
+
+
 
    /* @Override
     public void deleteStudent(Long id) {
@@ -150,4 +157,3 @@ public class StudentServiceImpl implements StudentService{
         System.out.println("Student deleted with id"+id);
     }*/
 
-}
