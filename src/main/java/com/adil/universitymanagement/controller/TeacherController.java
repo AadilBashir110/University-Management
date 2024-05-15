@@ -49,4 +49,8 @@ public class TeacherController {
         return new ResponseEntity<>(teacherBean,HttpStatus.OK);
     }
 
+/*
+    public ResponseEntity
+*/
+
 }

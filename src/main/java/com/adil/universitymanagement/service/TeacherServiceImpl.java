@@ -119,10 +119,9 @@ public class TeacherServiceImpl implements TeacherService {
         userService.updateUser(oldTeacherEmail,teacherBean.getEmail(),encodedPassword);
     }
 
-    /*
-    @Override
+   /* @Override
     public void deleteTeacher(Long id) {
-        teacherRepository.deleteById(id);
-    } */
 
+    }
+*/
 }

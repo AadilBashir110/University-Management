@@ -18,9 +18,6 @@ public interface CourseService {
 
     CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
-
-
-
    // void deleteCourse(Long id);
 
 }
