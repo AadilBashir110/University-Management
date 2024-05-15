@@ -43,7 +43,7 @@ public class TeacherController {
     }
 
     @PutMapping("/update-teacher")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
     public ResponseEntity<TeacherBean> updateTeacher(@RequestBody TeacherBean teacherBean){
         teacherService.updateTeacher(teacherBean);
         return new ResponseEntity<>(teacherBean,HttpStatus.OK);

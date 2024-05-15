@@ -132,7 +132,11 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void updateStudent(StudentBean studentBean) {
         Student oldStudent = studentRepository.findById(studentBean.getId()).get();
+
+        if(userService.getUsernameFromToken().equals(oldStudent.getEmail())
+                || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
             String oldStudentEmail = oldStudent.getEmail();
+
             if(studentBean.getName()!=null){
                 oldStudent.setName(studentBean.getName());
             }
@@ -146,6 +150,11 @@ public class StudentServiceImpl implements StudentService{
             String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
 
             userService.updateUser(oldStudentEmail,studentBean.getEmail(),encodedPassword);
+        }
+        else {
+            throw new RuntimeException("You cannot modify other student's details");
+        }
+
     }
 }
 

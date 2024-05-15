@@ -107,19 +107,28 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void updateTeacher(TeacherBean teacherBean) {
         Teacher oldTeacher = teacherRepository.findById(teacherBean.getId()).get();
-        String oldTeacherEmail = oldTeacher.getEmail();
-        if(teacherBean.getName()!=null){
-            oldTeacher.setName(teacherBean.getName());
-        }
-        if(teacherBean.getEmail()!=null){
-            oldTeacher.setEmail(teacherBean.getEmail());
-        }
-        teacherRepository.save(oldTeacher);
 
-        //Update that teacher user when the teacher is updated
-        String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
+        if(userService.getUsernameFromToken().equals(oldTeacher.getEmail())
+        || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
+            String oldTeacherEmail = oldTeacher.getEmail();
 
-        userService.updateUser(oldTeacherEmail,teacherBean.getEmail(),encodedPassword);
+            if(teacherBean.getName()!=null){
+                oldTeacher.setName(teacherBean.getName());
+            }
+            if(teacherBean.getEmail()!=null){
+                oldTeacher.setEmail(teacherBean.getEmail());
+            }
+            teacherRepository.save(oldTeacher);
+
+            //Update that teacher user when the teacher is updated
+            String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
+
+            userService.updateUser(oldTeacherEmail,teacherBean.getEmail(),encodedPassword);
+        }
+        else {
+            throw new RuntimeException("You cannot modify other teacher's details");
+        }
+
     }
 
    /* @Override
