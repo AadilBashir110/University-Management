@@ -50,23 +50,32 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void createTeacher(TeacherBean teacherBean) {
-        Teacher teacher = new Teacher();
-        teacher.setName(teacherBean.getName());
-        teacher.setEmail(teacherBean.getEmail());
 
-        teacherRepository.save(teacher);
+        Teacher oldTeacher = teacherRepository.findTeacherByEmail(teacherBean.getEmail());
 
-        // If a teacher creates another teacher
-        if(teacherBean.getPassword()!=null) {
-            String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
+        if(oldTeacher == null) {
+            Teacher teacher = new Teacher();
+            teacher.setName(teacherBean.getName());
+            teacher.setEmail(teacherBean.getEmail());
 
-            User user = new User();
-            user.setUsername(teacherBean.getEmail());
-            user.setPassword(encodedPassword);
-            user.setRole(Role.ROLE_TEACHER);
+            teacherRepository.save(teacher);
 
-            userRepository.save(user);
+            // If a teacher creates another teacher
+            if(teacherBean.getPassword()!=null) {
+                String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
+
+                User user = new User();
+                user.setUsername(teacherBean.getEmail());
+                user.setPassword(encodedPassword);
+                user.setRole(Role.ROLE_TEACHER);
+
+                userRepository.save(user);
+            }
         }
+        else {
+            throw new RuntimeException("This username is already taken");
+        }
+
     }
 
     @Override

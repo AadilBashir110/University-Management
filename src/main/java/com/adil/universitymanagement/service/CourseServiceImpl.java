@@ -3,6 +3,7 @@ package com.adil.universitymanagement.service;
 import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
+import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.CourseRepository;
@@ -22,6 +23,8 @@ public class CourseServiceImpl implements CourseService{
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
 
+    private final UserService userService;
+
     @Override
     public List<CourseBean> getAllCourses() {
         return courseRepository.findAll().stream()
@@ -37,17 +40,22 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public void createCourse(CourseBean courseBean) {
-        Course course = new Course();
-        course.setName(courseBean.getName());
-        course.setId(courseBean.getId());
+        Course oldCourse = courseRepository.findCourseByName(courseBean.getName());
+        if(oldCourse == null){
+            Course course = new Course();
+            course.setName(courseBean.getName());
 
-        courseRepository.save(course);
+            courseRepository.save(course);
+        }
+        else {
+            throw new RuntimeException("This course is already present");
+        }
     }
 
     @Override
     public Course getCourseById(Long id) {
         if(id == null){
-            throw new RuntimeException("could not find course with id "+id);
+            throw new RuntimeException("Could not find course with id "+id);
         }
         return courseRepository.findById(id).orElse(null);
     }
@@ -62,7 +70,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
    @Override
-    public CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
+    public String assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
 
         for (Long courseId : courseIds) {
@@ -72,20 +80,27 @@ public class CourseServiceImpl implements CourseService{
                 courseRepository.save(course);
             }
         }
-        return null;
+        return "Teacher assigned successfully";
     }
 
-    public CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId) {
+    public String enrollStudentToCourse(List<Long> courseIds, Long studentId) {
         Student student = studentRepository.findById(studentId).orElse(null);
 
-        for (Long courseId : courseIds) {
-            Course course = getCourseById(courseId);
-            if (course != null) {
-                student.getCourses().add(course);
+        if(userService.getUsernameFromToken().equals(student.getEmail())
+                || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
+            for (Long courseId : courseIds) {
+                Course course = getCourseById(courseId);
+                if (course != null) {
+                    student.getCourses().add(course);
+                }
             }
+            studentRepository.save(student);
+            return "Student enrolled successfully";
         }
-        studentRepository.save(student);
-        return null;
+        else {
+            throw new RuntimeException("Cannot access another student's details");
+        }
+
     }
 
      /* @Override

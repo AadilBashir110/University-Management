@@ -29,36 +29,45 @@ public class StudentServiceImpl implements StudentService{
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
-   public void createStudent(StudentBean studentBean) {
-        Student student = new Student();
-        student.setName(studentBean.getName());
-        student.setEmail(studentBean.getEmail());
+    public void createStudent(StudentBean studentBean) {
 
-        List<Course> newCourses = new ArrayList<>();
+        Student oldStudent = studentRepository.findStudentByEmail(studentBean.getEmail());
 
-        List<Long> courseIds = studentBean.getCourseIds();
-        for (Long courseId : courseIds) {
-            Course course = courseService.getCourseById(courseId);
-            if (course != null) {
-                newCourses.add(course);
-            } else {
-                throw new RuntimeException("No course exists with id "+courseId);
+        if(oldStudent==null){
+            Student student = new Student();
+            student.setName(studentBean.getName());
+            student.setEmail(studentBean.getEmail());
+
+            List<Course> newCourses = new ArrayList<>();
+
+            List<Long> courseIds = studentBean.getCourseIds();
+            for (Long courseId : courseIds) {
+                Course course = courseService.getCourseById(courseId);
+                if (course != null) {
+                    newCourses.add(course);
+                } else {
+                    throw new RuntimeException("No course exists with id "+courseId);
+                }
+            }
+            student.setCourses(newCourses);
+
+            studentRepository.save(student);
+            // If a teacher creates a student
+            if(studentBean.getPassword()!=null) {
+                String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
+
+                User user = new User();
+                user.setUsername(studentBean.getEmail());
+                user.setPassword(encodedPassword);
+                user.setRole(Role.ROLE_STUDENT);
+
+                userRepository.save(user);
             }
         }
-        student.setCourses(newCourses);
-
-        studentRepository.save(student);
-        // If a teacher creates a student
-        if(studentBean.getPassword()!=null) {
-            String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
-
-            User user = new User();
-            user.setUsername(studentBean.getEmail());
-            user.setPassword(encodedPassword);
-            user.setRole(Role.ROLE_STUDENT);
-
-            userRepository.save(user);
+        else {
+            throw new RuntimeException("This username is already taken.");
         }
+
     }
 
     @Override

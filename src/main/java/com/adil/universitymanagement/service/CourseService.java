@@ -14,9 +14,9 @@ public interface CourseService {
     Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
     void updateCourse(CourseBean courseBean);
 
-    CourseBean assignTeacherToCourse(List<Long> courseIds, Long teacherId);
+    String assignTeacherToCourse(List<Long> courseIds, Long teacherId);
 
-    CourseBean enrollStudentToCourse(List<Long> courseIds, Long studentId);
+    String enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
    // void deleteCourse(Long id);
 

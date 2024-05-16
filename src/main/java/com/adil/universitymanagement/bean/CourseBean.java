@@ -22,5 +22,4 @@ public class CourseBean {
         this.name = course.getName();
         this.teacherBean =  new TeacherBean(course.getTeacher());
     }
-
 }

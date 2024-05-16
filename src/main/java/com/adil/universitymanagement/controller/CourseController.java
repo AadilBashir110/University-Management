@@ -54,15 +54,15 @@ public class CourseController {
 
     @PostMapping("/assign-teacher")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CourseBean> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
-        CourseBean assignedCourse = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
-        return new ResponseEntity<>(assignedCourse,HttpStatus.OK);
+    public ResponseEntity<String> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
+        String message = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
     }
 
     @PostMapping("/enroll-student")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CourseBean> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
-        CourseBean enrolledStudent = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
-        return new ResponseEntity<>(enrolledStudent,HttpStatus.OK);
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_STUDENT')")
+    public ResponseEntity<String> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
+        String message = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
     }
 }
