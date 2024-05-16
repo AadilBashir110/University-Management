@@ -48,4 +48,11 @@ public class TeacherController {
         teacherService.updateTeacher(teacherBean);
         return new ResponseEntity<>(teacherBean,HttpStatus.OK);
     }
+
+    @DeleteMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> deleteTeacher(@RequestParam Long teacherId ){
+        String message = teacherService.deleteTeacher(teacherId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
 }

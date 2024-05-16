@@ -49,4 +49,11 @@ public class StudentController {
         studentService.updateStudent(studentBean);
         return new ResponseEntity<>(studentBean,HttpStatus.OK);
     }
+
+    @DeleteMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> deleteStudent(@RequestParam Long studentId ){
+        String message = studentService.deleteStudent(studentId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
 }

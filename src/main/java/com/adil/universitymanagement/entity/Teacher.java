@@ -24,7 +24,7 @@ public class Teacher {
     private String email;
 
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.DETACH)
     private List<Course> courses = new ArrayList<>();
 
     public Teacher(Long id, String name, String email) {

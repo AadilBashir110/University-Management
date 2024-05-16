@@ -6,6 +6,7 @@ import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.entity.User;
+import com.adil.universitymanagement.repository.CourseRepository;
 import com.adil.universitymanagement.repository.TeacherRepository;
 import com.adil.universitymanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
     private final UserService userService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -141,8 +143,20 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacher(Long id) {
-
+    public String deleteTeacher(Long teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow();
+        User user = userRepository.findByUsername(teacher.getEmail()).orElseThrow();
+        List<Course> courses = teacher.getCourses();
+        if (teacher!=null) {
+            for (Course course : courses) {
+                course.setTeacher(null);
+                courseRepository.save(course); // Update the course
+            }
+            teacherRepository.delete(teacher);
+            userRepository.delete(user);
+            return "Teacher deleted successfully";
+        } else {
+            throw new RuntimeException("No teacher exist with id "+teacherId);
+        }
     }
-
 }

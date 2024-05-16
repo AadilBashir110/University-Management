@@ -12,7 +12,6 @@ import com.adil.universitymanagement.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,10 +102,16 @@ public class CourseServiceImpl implements CourseService{
 
     }
 
-     /* @Override
-    public void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
-        System.out.println("Course deleted with id"+id);
-    }*/
-
+    //Manually handle the delete operation
+    @Override
+    public String deleteCourse(Long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        if(course!=null){
+            courseRepository.delete(course);
+            return "Course deleted successfully";
+        }
+        else {
+            throw new RuntimeException("No Course exists with id "+courseId);
+        }
+    }
 }

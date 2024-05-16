@@ -65,4 +65,10 @@ public class CourseController {
         String message = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
+    @DeleteMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> deleteCourse(@RequestParam Long courseId){
+        String message = courseService.deleteCourse(courseId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
 }

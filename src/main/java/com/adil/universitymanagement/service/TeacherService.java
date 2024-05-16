@@ -10,7 +10,7 @@ public interface TeacherService {
      List<TeacherBean> getAllTeachers();
      void updateTeacher(TeacherBean teacherBean);
 
-     void deleteTeacher(Long id);
+     String deleteTeacher(Long teacherId);
 
 
 }

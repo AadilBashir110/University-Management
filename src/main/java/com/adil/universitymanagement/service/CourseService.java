@@ -18,6 +18,6 @@ public interface CourseService {
 
     String enrollStudentToCourse(List<Long> courseIds, Long studentId);
 
-   // void deleteCourse(Long id);
+    String deleteCourse(Long courseId);
 
 }

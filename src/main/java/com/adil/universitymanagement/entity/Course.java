@@ -2,11 +2,19 @@ package com.adil.universitymanagement.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,49 +24,7 @@ public class Course {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.DETACH)
     private List<Student> students = new ArrayList<>();
 
-    public Course(){
-    }
-
-    public Course(Long id, String name, Teacher teacher, List<Student> students) {
-        this.id = id;
-        this.name = name;
-        this.teacher = teacher;
-        this.students = students;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
 }

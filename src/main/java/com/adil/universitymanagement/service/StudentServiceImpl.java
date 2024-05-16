@@ -165,13 +165,19 @@ public class StudentServiceImpl implements StudentService{
         }
 
     }
+
+    @Override
+    public String deleteStudent(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow();
+        User user = userRepository.findByUsername(student.getEmail()).orElseThrow();
+        if(student!=null){
+            studentRepository.delete(student);
+            userRepository.delete(user);
+            return "Student deleted successfully";
+        } else {
+            throw new RuntimeException("No teacher exist with id "+studentId);
+        }
+    }
 }
 
-
-
-   /* @Override
-    public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
-        System.out.println("Student deleted with id"+id);
-    }*/
 
