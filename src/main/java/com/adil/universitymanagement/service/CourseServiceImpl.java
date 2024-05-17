@@ -111,8 +111,6 @@ public class CourseServiceImpl implements CourseService{
                 student.getCourses().remove(course);
                 studentRepository.save(student);
             }
-
-            // Now delete the course
             courseRepository.delete(course);
             return "Course deleted successfully";
         }
