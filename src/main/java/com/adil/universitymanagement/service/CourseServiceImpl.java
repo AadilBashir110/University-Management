@@ -107,6 +107,12 @@ public class CourseServiceImpl implements CourseService{
     public String deleteCourse(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow();
         if(course!=null){
+            for (Student student : course.getStudents()) {
+                student.getCourses().remove(course);
+                studentRepository.save(student);
+            }
+
+            // Now delete the course
             courseRepository.delete(course);
             return "Course deleted successfully";
         }
