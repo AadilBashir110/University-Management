@@ -83,7 +83,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     public String enrollStudentToCourse(List<Long> courseIds, Long studentId) {
-        Student student = studentRepository.findById(studentId).orElse(null);
+        Student student = studentRepository.findById(studentId).orElseThrow();
 
         if(userService.getUsernameFromToken().equals(student.getEmail())
                 || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
@@ -97,12 +97,11 @@ public class CourseServiceImpl implements CourseService{
             return "Student enrolled successfully";
         }
         else {
-            throw new RuntimeException("Cannot access another student's details");
+            throw new RuntimeException("Cannot access other student details");
         }
 
     }
 
-    //Manually handle the delete operation
     @Override
     public String deleteCourse(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow();

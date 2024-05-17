@@ -14,8 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class StudentServiceImpl implements StudentService{
             student.setName(studentBean.getName());
             student.setEmail(studentBean.getEmail());
 
-            List<Course> newCourses = new ArrayList<>();
+            Set<Course> newCourses = new HashSet<>();
 
             List<Long> courseIds = studentBean.getCourseIds();
             for (Long courseId : courseIds) {
@@ -85,7 +86,7 @@ public class StudentServiceImpl implements StudentService{
                 studentBean.setName(student.getName());
                 studentBean.setEmail(student.getEmail());
 
-                List<Course> courses = student.getCourses();
+                Set<Course> courses = student.getCourses();
                 for (Course course : courses) {
                     if (course != null) {
                         CourseBean courseBean = new CourseBean();
@@ -119,7 +120,7 @@ public class StudentServiceImpl implements StudentService{
                     studentBean.setName(student.getName());
                     studentBean.setEmail(student.getEmail());
 
-                    List<Course> courses = student.getCourses();
+                    Set<Course> courses = student.getCourses();
                     for(Course course: courses){
                         if(course != null) {
                             CourseBean courseBean = new CourseBean();
