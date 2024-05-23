@@ -9,7 +9,6 @@ public interface StudentService {
     StudentBean getStudentById(Long id) ;
     List<StudentBean> getAllStudents();
     void updateStudent(StudentBean studentBean);
-
     String deleteStudent(Long studentId);
 
 }
