@@ -18,7 +18,6 @@ public class StudentController {
 
     private final StudentService studentService;
 
-
     @GetMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<StudentBean>> getAllStudents(){

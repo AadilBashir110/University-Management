@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService{
             student.setCourses(newCourses);
 
             studentRepository.save(student);
-            // If a teacher creates a student
+            // If admin creates a student
             if(studentBean.getPassword()!=null) {
                 String encodedPassword = passwordEncoder.encode(studentBean.getPassword());
 

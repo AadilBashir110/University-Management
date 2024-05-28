@@ -62,7 +62,7 @@ public class TeacherServiceImpl implements TeacherService {
 
             teacherRepository.save(teacher);
 
-            // If a teacher creates another teacher
+            // If admin creates a teacher
             if(teacherBean.getPassword()!=null) {
                 String encodedPassword = passwordEncoder.encode(teacherBean.getPassword());
 
