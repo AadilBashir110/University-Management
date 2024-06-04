@@ -11,4 +11,8 @@ public interface StudentService {
     void updateStudent(StudentBean studentBean);
     String deleteStudent(Long studentId);
 
+    Long getStudentCount();
+
+
+
 }

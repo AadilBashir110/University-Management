@@ -179,6 +179,11 @@ public class StudentServiceImpl implements StudentService{
             throw new RuntimeException("No teacher exist with id "+studentId);
         }
     }
+
+    @Override
+    public Long getStudentCount() {
+        return studentRepository.count();
+    }
 }
 
 

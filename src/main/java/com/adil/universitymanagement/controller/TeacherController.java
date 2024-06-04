@@ -55,4 +55,10 @@ public class TeacherController {
         String message = teacherService.deleteTeacher(teacherId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
+    @GetMapping("/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Long> getTeacherCount() {
+        long count = teacherService.getTeacherCount();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
 }

@@ -10,6 +10,7 @@ import com.adil.universitymanagement.repository.CourseRepository;
 import com.adil.universitymanagement.repository.TeacherRepository;
 import com.adil.universitymanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import netscape.javascript.JSObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -154,9 +155,15 @@ public class TeacherServiceImpl implements TeacherService {
             }
             teacherRepository.delete(teacher);
             userRepository.delete(user);
-            return "Teacher deleted successfully";
+
+            return "{\"message\": \"Teacher deleted successfully\"}";
         } else {
             throw new RuntimeException("No teacher exist with id "+teacherId);
         }
+    }
+
+    @Override
+    public Long getTeacherCount() {
+        return teacherRepository.count();
     }
 }

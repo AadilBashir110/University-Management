@@ -11,5 +11,5 @@ public interface TeacherService {
      void updateTeacher(TeacherBean teacherBean);
      String deleteTeacher(Long teacherId);
 
-
+     Long getTeacherCount();
 }
