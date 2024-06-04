@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService{
 
             Set<Course> newCourses = new HashSet<>();
 
-            List<Long> courseIds = studentBean.getCourseIds();
+           /* List<Long> courseIds = studentBean.getCourseIds();
             for (Long courseId : courseIds) {
                 Course course = courseService.getCourseById(courseId);
                 if (course != null) {
@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService{
                     throw new RuntimeException("No course exists with id "+courseId);
                 }
             }
-            student.setCourses(newCourses);
+            student.setCourses(newCourses);*/
 
             studentRepository.save(student);
             // If admin creates a student
@@ -92,10 +92,10 @@ public class StudentServiceImpl implements StudentService{
                         CourseBean courseBean = new CourseBean();
                         courseBean.setId(course.getId());
                         courseBean.setName(course.getName());
-                        courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
+                       /* courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
                                 course.getTeacher().getName(),
                                 course.getTeacher().getEmail()));
-
+*/
                         studentBean.getCourseBean().add(courseBean);
                     }
                 }
@@ -127,9 +127,9 @@ public class StudentServiceImpl implements StudentService{
                             courseBean.setId(course.getId());
                             courseBean.setName(course.getName());
 
-                            courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
+                           /* courseBean.setTeacherBean(new TeacherBean(course.getTeacher().getId(),
                                     course.getTeacher().getName(),
-                                    course.getTeacher().getEmail()));
+                                    course.getTeacher().getEmail()));*/
 
                             studentBean.getCourseBean().add(courseBean);
                         }
@@ -174,7 +174,7 @@ public class StudentServiceImpl implements StudentService{
         if(student!=null){
             studentRepository.delete(student);
             userRepository.delete(user);
-            return "Student deleted successfully";
+            return "{\"message\": \"Student deleted successfully\"}";
         } else {
             throw new RuntimeException("No teacher exist with id "+studentId);
         }

@@ -16,5 +16,6 @@ public interface CourseService {
     String assignTeacherToCourse(List<Long> courseIds, Long teacherId);
     String enrollStudentToCourse(List<Long> courseIds, Long studentId);
     String deleteCourse(Long courseId);
+    Long getCourseCount();
 
 }

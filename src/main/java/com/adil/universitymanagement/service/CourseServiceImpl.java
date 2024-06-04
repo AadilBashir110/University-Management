@@ -117,4 +117,9 @@ public class CourseServiceImpl implements CourseService{
             throw new RuntimeException("No Course exists with id "+courseId);
         }
     }
+
+    @Override
+    public Long getCourseCount() {
+        return courseRepository.count();
+    }
 }
