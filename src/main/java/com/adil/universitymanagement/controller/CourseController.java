@@ -73,7 +73,7 @@ public class CourseController {
     }
 
     @GetMapping("/count")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> getCourseCount() {
         long count = courseService.getCourseCount();
         return new ResponseEntity<>(count, HttpStatus.OK);
