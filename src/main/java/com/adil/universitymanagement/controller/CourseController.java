@@ -56,8 +56,8 @@ public class CourseController {
 
     @PostMapping("/assign-teacher")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> assignTeacherToCourse(@RequestBody CourseIdRequest courseIdsRequest, @RequestParam Long teacherId){
-        String message = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
+    public ResponseEntity<String> assignTeacherToCourse(@RequestBody CourseIdRequest courseIdRequest, @RequestParam Long teacherId){
+        String message = courseService.assignTeacherToCourse(courseIdRequest.getCourseId(),teacherId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
 

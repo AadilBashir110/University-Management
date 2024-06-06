@@ -21,13 +21,6 @@ public class TeacherBean {
     private List<CourseBean> courseBean = new ArrayList<>();
     private String password;
 
-
-    public TeacherBean(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
-
     public TeacherBean(Teacher teacher) {
         this.id = teacher.getId();
         this.name = teacher.getName();

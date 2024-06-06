@@ -30,7 +30,6 @@ public class CourseServiceImpl implements CourseService{
                     CourseBean courseBean = new CourseBean();
                     courseBean.setId(course.getId());
                     courseBean.setName(course.getName());
-                    courseBean.setTeacherBean(new TeacherBean(course.getTeacher()));
                     return courseBean;
                 })
                 .collect(Collectors.toList());
@@ -68,17 +67,14 @@ public class CourseServiceImpl implements CourseService{
     }
 
    @Override
-    public String assignTeacherToCourse(List<Long> courseIds, Long teacherId) {
+    public String assignTeacherToCourse(Long courseId, Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
-
-        for (Long courseId : courseIds) {
-            Course course = getCourseById(courseId);
-            if (course != null) {
-                course.setTeacher(teacher);
-                courseRepository.save(course);
-            }
+        Course course = getCourseById(courseId);
+        if (course != null) {
+            course.setTeacher(teacher);
         }
-        return "Teacher assigned successfully";
+        courseRepository.save(course);
+        return "{\"message\": \"Teacher assigned successfully\"}";
     }
 
     public String enrollStudentToCourse(Long courseId, Long studentId) {
@@ -88,8 +84,8 @@ public class CourseServiceImpl implements CourseService{
             student.getCourses().add(course);
         }
         studentRepository.save(student);
-        return "Student enrolled successfully";
-        }
+        return "{\"message\": \"Student enrolled successfully\"}";
+    }
 
     @Override
     public String deleteCourse(Long courseId) {
@@ -100,7 +96,7 @@ public class CourseServiceImpl implements CourseService{
                 studentRepository.save(student);
             }
             courseRepository.delete(course);
-            return "Course deleted successfully";
+            return "{\"message\": \"Course deleted successfully\"}";
         }
         else {
             throw new RuntimeException("No Course exists with id "+courseId);

@@ -13,7 +13,7 @@ public interface CourseService {
     void createCourse(CourseBean courseBean);
     Course getCourseById(Long id);  // Do not convert to bean, already converted in Course Controller
     void updateCourse(CourseBean courseBean);
-    String assignTeacherToCourse(List<Long> courseIds, Long teacherId);
+    String assignTeacherToCourse(Long courseId, Long teacherId);
     String enrollStudentToCourse(Long courseId, Long studentId);
     String deleteCourse(Long courseId);
     Long getCourseCount();
