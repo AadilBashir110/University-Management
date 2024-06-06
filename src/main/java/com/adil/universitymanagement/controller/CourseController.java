@@ -2,7 +2,7 @@ package com.adil.universitymanagement.controller;
 
 import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.entity.Course;
-import com.adil.universitymanagement.entity.CourseIdsRequest;
+import com.adil.universitymanagement.entity.CourseIdRequest;
 import com.adil.universitymanagement.service.CourseService;
 import com.adil.universitymanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -56,16 +56,16 @@ public class CourseController {
 
     @PostMapping("/assign-teacher")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> assignTeacherToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long teacherId){
+    public ResponseEntity<String> assignTeacherToCourse(@RequestBody CourseIdRequest courseIdsRequest, @RequestParam Long teacherId){
         String message = courseService.assignTeacherToCourse(courseIdsRequest.getCourseIds(),teacherId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
 
     @PostMapping("/enroll-student")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public ResponseEntity<String> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest){
+    public ResponseEntity<String> enrollStudentToCourse(@RequestBody CourseIdRequest courseIdRequest){
         Long studentId = userService.getStudentIdFromToken();
-        String message = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
+        String message = courseService.enrollStudentToCourse(courseIdRequest.getCourseId(),studentId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
     @DeleteMapping()

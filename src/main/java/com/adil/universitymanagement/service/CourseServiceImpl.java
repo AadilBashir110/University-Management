@@ -3,7 +3,6 @@ package com.adil.universitymanagement.service;
 import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.bean.TeacherBean;
 import com.adil.universitymanagement.entity.Course;
-import com.adil.universitymanagement.entity.Role;
 import com.adil.universitymanagement.entity.Student;
 import com.adil.universitymanagement.entity.Teacher;
 import com.adil.universitymanagement.repository.CourseRepository;
@@ -82,16 +81,14 @@ public class CourseServiceImpl implements CourseService{
         return "Teacher assigned successfully";
     }
 
-    public String enrollStudentToCourse(List<Long> courseIds, Long studentId) {
+    public String enrollStudentToCourse(Long courseId, Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
-            for (Long courseId : courseIds) {
-                Course course = getCourseById(courseId);
-                if (course != null) {
-                    student.getCourses().add(course);
-                }
-            }
-            studentRepository.save(student);
-            return "Student enrolled successfully";
+        Course course = getCourseById(courseId);
+        if (course != null) {
+            student.getCourses().add(course);
+        }
+        studentRepository.save(student);
+        return "Student enrolled successfully";
         }
 
     @Override
