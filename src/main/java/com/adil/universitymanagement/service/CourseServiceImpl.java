@@ -84,9 +84,6 @@ public class CourseServiceImpl implements CourseService{
 
     public String enrollStudentToCourse(List<Long> courseIds, Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
-
-        if(userService.getUsernameFromToken().equals(student.getEmail())
-                || userService.getRoleFromUsername().equals(Role.ROLE_ADMIN)){
             for (Long courseId : courseIds) {
                 Course course = getCourseById(courseId);
                 if (course != null) {
@@ -96,11 +93,6 @@ public class CourseServiceImpl implements CourseService{
             studentRepository.save(student);
             return "Student enrolled successfully";
         }
-        else {
-            throw new RuntimeException("Cannot access other student details");
-        }
-
-    }
 
     @Override
     public String deleteCourse(Long courseId) {

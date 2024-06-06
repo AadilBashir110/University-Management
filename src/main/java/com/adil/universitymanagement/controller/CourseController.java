@@ -4,6 +4,7 @@ import com.adil.universitymanagement.bean.CourseBean;
 import com.adil.universitymanagement.entity.Course;
 import com.adil.universitymanagement.entity.CourseIdsRequest;
 import com.adil.universitymanagement.service.CourseService;
+import com.adil.universitymanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final UserService userService;
 
     @GetMapping()
     @PreAuthorize("hasRole('ROLE_TEACHER') OR hasRole('ROLE_STUDENT') OR hasRole('ROLE_ADMIN')")
@@ -60,8 +62,9 @@ public class CourseController {
     }
 
     @PostMapping("/enroll-student")
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_STUDENT')")
-    public ResponseEntity<String> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest, @RequestParam Long studentId){
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public ResponseEntity<String> enrollStudentToCourse(@RequestBody CourseIdsRequest courseIdsRequest){
+        Long studentId = userService.getStudentIdFromToken();
         String message = courseService.enrollStudentToCourse(courseIdsRequest.getCourseIds(),studentId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
@@ -73,7 +76,6 @@ public class CourseController {
     }
 
     @GetMapping("/count")
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> getCourseCount() {
         long count = courseService.getCourseCount();
         return new ResponseEntity<>(count, HttpStatus.OK);
